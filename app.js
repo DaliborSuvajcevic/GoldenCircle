@@ -210,7 +210,7 @@ const screens = {
       <a class="tile" href="#disciplina"><b>Disciplina</b><span>Zadaci, pregled dana, niz</span></a>
       <a class="tile" href="#trading"><b>Trading</b><span>Rizik, sesije, dnevnik</span></a>
       <a class="tile" href="#biznis"><b>Biznis</b><span>Proizvodi i ponude</span></a>
-      <a class="tile" href="#krug"><b>Krug</b><span>Brend, akademija, igra</span></a>
+      <a class="tile" href="#krug"><b>Krug</b><span>Brend, igra, kontakt</span></a>
     </div>`;
   },
 
@@ -302,8 +302,6 @@ const screens = {
       <div class="path">${pillars.map((p, i) => `<div><i>${i + 1}</i><span>${p}</span></div>`).join('')}</div>
     </section>
     <section class="list" aria-label="Ekosistem">
-      <div class="item dashed"><span class="t"><b class="serif" style="font-size:17px">THE CODE</b><small>Set the standard. Live by the code.</small></span><span class="tag">USKORO</span></div>
-      <div class="item dashed"><span class="t"><b class="serif" style="font-size:17px">Akademija</b><small>Analize uživo, strategija, članstvo</small></span><span class="tag">USKORO</span></div>
       <a class="item" href="${LINKS.snake}"><span class="t"><b class="serif" style="font-size:17px">Snake</b><small>Igraj</small></span>${CHEV}</a>
     </section>
     <div class="tiles">
