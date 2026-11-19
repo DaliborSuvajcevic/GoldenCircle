@@ -107,6 +107,8 @@ const calc = (bal, riskPct, sl) => {
 
 /* ---------- sadržaj ---------- */
 const STANDARDS = ['Disciplina pre motivacije.', 'Doslednost pre trenutnog entuzijazma.', 'Standardi pre izgovora.', 'Izvršenje pre beskrajnog planiranja.', 'Dugoročno razmišljanje pre brzog zadovoljstva.', 'Lična odgovornost, bez izgovora.'];
+/* iz materijala „Disciplina pre motivacije“, The Golden Circle */
+const THOUGHTS = ['Motivacija dolazi i odlazi. Disciplina ostaje.', 'Odlaganje je obećanje koje sebi dajemo da se danas osećamo bolje.', 'Kada prestaneš da kriviš druge, počinješ da rasteš.', 'Nije važno šta radiš jednom. Važno je šta radiš svakog dana.', 'Ljudi ne propadaju zbog manjka prilika. Propadaju zbog manjka fokusa.', 'Bolje platiti lekciju nego zanimaciju.', 'Znanje bez akcije nema vrednost.', 'Život se menja kada primeniš ono što već znaš.', 'Mali koraci, veliki rezultati.', 'Problem nikad nije dan u nedelji. Problem je odluka koju izbegavamo.', 'Veliki rezultati zahtevaju vreme.', 'Greške, gubici i padovi su deo procesa.'];
 const dayOfYear = () => { const n = new Date(); return Math.floor((n - new Date(n.getFullYear(), 0, 0)) / 864e5); };
 const CAMPAIGN = {start: '2026-11-19', days: 30, end: '2026-12-18', offerEnd: '2026-12-30', spots: 10};
 const DM = 'https://ig.me/m/onegoldenboyy';
@@ -193,16 +195,11 @@ const screens = {
       <a class="link" href="#disciplina">${d.tasks.length ? 'Otvori zadatke' : 'Dodaj zadatke za danas'}</a>
     </section>
 
-    <section class="card" aria-label="Trading danas">
-      <div class="row"><span class="eyebrow">TRADING · XAU/USD</span>${sessLine}</div>
-      <div class="stats">
-        <div class="stat"><span>Sesija</span><b>${s.active ? s.active.range : s.next ? s.next.range : '–'}</b></div>
-        <div class="stat"><span>Trejdovi</span><b>${j ? `${j.todayCount} / ${j.maxTrades}` : '–'}</b></div>
-        <div class="stat"><span>Rizik</span><b>${j ? `${nf(j.todayRisk, 1)}% / ${nf(j.maxLoss)}%` : '–'}</b></div>
-      </div>
-      ${j ? '' : '<p class="empty">Dnevnik nema podataka na ovom uređaju.</p>'}
-      <a class="link" href="#trading">Kalkulator i dnevnik</a>
-    </section>
+    <a class="card offer-card" href="#mindset" aria-label="Mindset, misao dana">
+      <div class="row"><span class="eyebrow">MINDSET · MISAO DANA</span></div>
+      <p class="quote">${THOUGHTS[dayOfYear() % THOUGHTS.length]}</p>
+      <span class="row"><span class="link">Otvori Mindset</span>${CHEV}</span>
+    </a>
 
     ${c ? (() => { return `<a class="card hi offer-card" href="#masterclass" aria-label="Golden Masterclass, pogledaj ponudu">
       <div class="row"><span class="eyebrow">MASTERCLASS KAMPANJA</span><span style="font-size:13px">${c.over ? 'Poslednji dani' : `Dan ${c.day} / ${CAMPAIGN.days}`}</span></div>
@@ -345,6 +342,63 @@ const screens = {
   kartica() { return embed('KONTAKT', LINKS.card, 'krug', 'Digitalna kartica'); },
   snake() { return embed('SNAKE', LINKS.snake, 'krug', 'Snake'); },
 
+  mindset() {
+    const principles = [['01', 'Doslednost', 'Nije važno šta radiš jednom. Važno je šta radiš svakog dana.'], ['02', 'Fokus', 'Ljudi ne propadaju zbog manjka prilika. Propadaju zbog manjka fokusa.'], ['03', 'Strpljenje', 'Veliki rezultati zahtevaju vreme. Kao i stablo, raste tiho, korak po korak.']];
+    const owner = [['Gubitak na tržištu', 'Analiziram svoj plan.'], ['Loš rezultat u poslu', 'Menjam strategiju, ne izgovore.'], ['Težak period', 'Tražim rešenje, ne krivca.']];
+    const habits = ['Čitanje', 'Planiranje dana', 'Trening', 'Vođenje dnevnika', 'Kontrola okruženja'];
+    const values = ['Disciplina', 'Integritet', 'Odgovornost', 'Poštovanje', 'Kontinuiran razvoj'];
+    return `<header class="top"><a class="round" href="#pocetna" aria-label="Nazad"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a>
+      <span class="eyebrow">MINDSET</span><img src="crown.png" alt="The Golden Circle kruna"></header>
+    <div><h1>Disciplina pre motivacije.</h1><p class="sub">Mindset trening za ljude koji žele više od proseka.</p></div>
+
+    <section class="card inv" aria-label="Misao dana">
+      <span class="eyebrow">MISAO DANA</span>
+      <p class="quote">${THOUGHTS[dayOfYear() % THOUGHTS.length]}</p>
+    </section>
+
+    <section class="card" aria-label="Šta je mindset">
+      <span class="eyebrow">ŠTA JE MINDSET</span>
+      <p style="margin:0">Mindset je način na koji tumačimo događaje, izazove i prilike.</p>
+      <p class="serif" style="margin:0;font-size:18px">Isti događaj. Dva različita čoveka. Dva različita rezultata.</p>
+    </section>
+
+    <section class="list" aria-label="Principi">
+      <span class="eyebrow">PRINCIPI</span>
+      ${principles.map(([n, t, d]) => `<div class="card" style="gap:6px"><span class="gold" style="font:600 12px Inter;letter-spacing:.1em">PRINCIP ${n}</span><b class="serif" style="font-size:22px;font-weight:500">${t}</b><span class="muted">${d}</span></div>`).join('')}
+    </section>
+
+    <section class="card" aria-label="Preuzmi odgovornost">
+      <span class="eyebrow">PREUZMI ODGOVORNOST</span>
+      <p class="serif" style="margin:0;font-size:18px">Kada prestaneš da kriviš druge, počinješ da rasteš.</p>
+      ${owner.map(([s, r]) => `<div style="display:flex;flex-direction:column;gap:2px;border-top:1px solid var(--line);padding-top:10px"><span class="muted" style="font-size:12px">${s}</span><b style="font-weight:500">${r}</b></div>`).join('')}
+    </section>
+
+    <section class="card" aria-label="Kako razmišljaju uspešni ljudi">
+      <span class="eyebrow">OBRAZAC</span>
+      <div class="row"><span class="muted">Uspešni</span><b>Problem → Rešenje</b></div>
+      <div class="row"><span class="muted">Većina</span><b>Problem → Kukanje</b></div>
+    </section>
+
+    <section class="card" aria-label="5 navika">
+      <span class="eyebrow">5 NAVIKA KOJE MENJAJU ŽIVOT</span>
+      <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px">${habits.map(h => `<li>${h}</li>`).join('')}</ul>
+    </section>
+
+    <section class="card" aria-label="Pravila Zlatnog Kruga">
+      <span class="eyebrow">PRAVILA ZLATNOG KRUGA</span>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">${values.map(v => `<span class="tag">${v.toUpperCase()}</span>`).join('')}</div>
+    </section>
+
+    <section class="card hi" aria-label="Refleksija">
+      <span class="eyebrow">REFLEKSIJA</span>
+      <p class="quote" style="font-size:19px">Šta znaš da treba da uradiš već sutra, a odlažeš mesecima?</p>
+      <span class="muted" style="font-size:13px">Danas odluči. Sutra primeni.</span>
+      <a class="btn" href="#disciplina">Upiši to kao zadatak</a>
+    </section>
+
+    <p class="serif" style="text-align:center;font-size:18px;margin:8px 0 0">Život se ne menja kada naučiš nešto novo.<br>Život se menja kada primeniš ono što već znaš.</p>`;
+  },
+
   prijava() {
     return `<div class="hero" style="padding-top:12vh">
       <img src="crown.png" alt="The Golden Circle kruna" style="width:88px;height:88px">
@@ -404,14 +458,14 @@ const render = (keepScroll) => {
   document.body.classList.toggle('menu-open', current === 'meni' || current === 'prijava');
   document.body.classList.toggle('embed-open', current in EMBEDS);
   document.documentElement.classList.toggle('nobar', (current === 'meni' || current === 'prijava' || current in EMBEDS));
-  const act = EMBEDS[current] || (current === 'masterclass' ? 'biznis' : current);
+  const act = EMBEDS[current] || (current === 'masterclass' ? 'biznis' : current === 'mindset' ? 'pocetna' : current);
   document.querySelectorAll('.tabbar a').forEach(a => a.dataset.tab === act ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
   if (current === 'trading') updateCalc();
   if (keepScroll) window.scrollTo(0, y);
 };
 const route = () => {
   const h = location.hash.slice(1);
-  current = ['meni', 'masterclass'].includes(h) || h in EMBEDS || TABS.includes(h) ? h : 'pocetna';
+  current = ['meni', 'masterclass', 'mindset'].includes(h) || h in EMBEDS || TABS.includes(h) ? h : 'pocetna';
   if (!gc.name) { if (current !== 'pocetna') wanted = current; current = 'prijava'; }
   if (TABS.includes(current)) lastTab = current;
   render();
