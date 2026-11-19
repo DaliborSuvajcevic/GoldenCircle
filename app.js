@@ -105,15 +105,15 @@ const calc = (bal, riskPct, sl) => {
 /* ---------- sadržaj ---------- */
 const STANDARDS = ['Disciplina pre motivacije.', 'Doslednost pre trenutnog entuzijazma.', 'Standardi pre izgovora.', 'Izvršenje pre beskrajnog planiranja.', 'Dugoročno razmišljanje pre brzog zadovoljstva.', 'Lična odgovornost, bez izgovora.'];
 const dayOfYear = () => { const n = new Date(); return Math.floor((n - new Date(n.getFullYear(), 0, 0)) / 864e5); };
-const CAMPAIGN = {start: '2026-11-19', days: 30, end: '2026-12-18', betaEnd: '2026-12-06', mainStart: '2026-12-07', offerEnd: '2026-12-30', spots: 10};
+const CAMPAIGN = {start: '2026-11-19', days: 30, end: '2026-12-18', offerEnd: '2026-12-30', spots: 10};
 const DM = 'https://ig.me/m/onegoldenboyy';
 const OFFERS = [
-  {id: 'beta', name: 'Beta grupa', price: '150 €', old: '', when: 'Do 6.12. ili do popune 10 mesta', from: CAMPAIGN.start, to: CAMPAIGN.betaEnd,
-   inc: ['Golden Masterclass, kompletna trading strategija', 'Mesec dana grupnog mentorstva', 'Grupni pozivi 3 puta nedeljno po 1 sat', 'Ograničeno na 10 mesta', 'Zauzvrat: tvoja iskrena recenzija']},
-  {id: 'main', name: 'Masterclass', price: '250 €', old: '300 €', when: 'Od 7.12. do 30.12.', from: CAMPAIGN.mainStart, to: CAMPAIGN.offerEnd,
-   inc: ['Golden Masterclass, kompletna trading strategija', '1 individualni poziv od 1 sata', 'Cena 250 € umesto 300 €, samo do 30.12.']}
+  {id: 'beta', name: 'Masterclass + mentorstvo', price: '150 €', old: '', when: 'Samo za prvih 10 kupaca', tag: 'PRVIH 10',
+   inc: ['Golden Masterclass, kompletna trading strategija', 'Mentorstvo 3 puta nedeljno po 1 sat', 'Samo 10 mesta']},
+  {id: 'main', name: 'Masterclass', price: '250 €', old: '300 €', when: 'Cena važi do 30.12.', tag: 'DO 30.12.',
+   inc: ['Golden Masterclass, kompletna trading strategija', '1 sat mentorstva', 'Cena 250 € umesto 300 €, samo do 30.12.']}
 ];
-const currentOffer = () => { const t = today(); return OFFERS.find(o => t >= o.from && t <= o.to) || null; };
+const offerOpen = () => { const t = today(); return t >= CAMPAIGN.start && t <= CAMPAIGN.offerEnd; };
 const campaign = () => {
   const t = today();
   if (t < CAMPAIGN.start || t > CAMPAIGN.offerEnd) return null;
@@ -172,10 +172,10 @@ const screens = {
       <a class="link" href="#trading">Kalkulator i dnevnik</a>
     </section>
 
-    ${c ? (() => { const o = currentOffer(); return `<a class="card hi offer-card" href="#masterclass" aria-label="Golden Masterclass, pogledaj ponudu">
+    ${c ? (() => { return `<a class="card hi offer-card" href="#masterclass" aria-label="Golden Masterclass, pogledaj ponudu">
       <div class="row"><span class="eyebrow">MASTERCLASS KAMPANJA</span><span style="font-size:13px">${c.over ? 'Poslednji dani' : `Dan ${c.day} / ${CAMPAIGN.days}`}</span></div>
-      <div class="row" style="align-items:flex-end"><span><span class="serif" style="font-size:22px;display:block">Golden Masterclass</span><span class="muted" style="font-size:13px">${o ? `${o.name} · ${o.when}` : 'Ponuda je završena'}</span></span>
-        ${o ? `<span class="big gold" style="font-size:28px;white-space:nowrap">${o.price}</span>` : ''}</div>
+      <div class="row" style="align-items:flex-end"><span><span class="serif" style="font-size:22px;display:block">Golden Masterclass</span><span class="muted" style="font-size:13px">Prvih 10: 150 € · zatim 250 € do 30.12.</span></span>
+        <span class="big gold" style="font-size:28px;white-space:nowrap">od 150 €</span></div>
       <div class="track"><i style="width:${c.day / CAMPAIGN.days * 100}%"></i></div>
       <span class="row"><span class="link">Pogledaj šta dobijaš</span>${CHEV}</span>
     </a>`; })() : ''}
@@ -255,7 +255,7 @@ const screens = {
     <div><h1>Biznis</h1><p class="sub">Proizvodi The Golden Circle.</p></div>
     <section class="list" aria-label="Proizvodi">
       <span class="eyebrow">PROIZVODI</span>
-      <a class="item" href="#masterclass"><span class="t"><b>Golden Masterclass</b><small>Beta grupa 150 € · 10 mesta</small></span><span class="p">250 €</span></a>
+      <a class="item" href="#masterclass"><span class="t"><b>Golden Masterclass</b><small>Prvih 10: 150 € · do 30.12.: 250 €</small></span><span class="p">250 €</span></a>
       <div class="item"><span class="t"><b>Golden Clarity</b><small>PDF za kreatore</small></span><span class="p">15–19 €</span></div>
       <a class="item" href="${LINKS.starter}"><span class="t"><b>Golden Starter Kit</b><small>Forex za početnike · Gumroad</small></span><span class="p">Besplatno</span></a>
     </section>`;
@@ -281,7 +281,7 @@ const screens = {
   },
 
   masterclass() {
-    const c = campaign(), o = currentOffer();
+    const c = campaign(), open = offerOpen();
     return `<header class="top"><a class="round" href="#${esc(lastTab)}" aria-label="Nazad"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a>
       <span class="eyebrow">MASTERCLASS</span><img src="crown.png" alt="The Golden Circle kruna"></header>
     <div><h1>Golden Masterclass</h1><p class="sub">Forex edukacija i mentorstvo · The Golden Circle</p></div>
@@ -291,15 +291,14 @@ const screens = {
       <span class="muted" style="font-size:12px">Kampanja traje od 19.11. do 18.12. Ponuda važi do 30.12.</span>
     </section>` : '<p class="warn">Ponuda je završena.</p>'}
     ${OFFERS.map(x => {
-      const now = o && o.id === x.id, past = today() > x.to;
-      return `<section class="card ${now ? 'hi' : ''}" aria-label="${x.name}" style="${past ? 'opacity:.55' : ''}">
-        <div class="row"><span class="eyebrow">${x.name.toUpperCase()}</span>${now ? '<span class="tag">TRENUTNA PONUDA</span>' : past ? '<span class="muted" style="font-size:12px">Završeno</span>' : '<span class="muted" style="font-size:12px">Uskoro</span>'}</div>
+      return `<section class="card ${x.id === 'beta' ? 'hi' : ''}" aria-label="${x.name}" style="${open ? '' : 'opacity:.55'}">
+        <div class="row"><span class="eyebrow">${x.name.toUpperCase()}</span><span class="tag">${x.tag}</span></div>
         <div class="row" style="align-items:baseline;justify-content:flex-start;gap:12px"><span class="big gold">${x.price}</span>${x.old ? `<s class="muted">${x.old}</s>` : ''}</div>
         <span class="muted" style="font-size:13px">${x.when}</span>
         <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px">${x.inc.map(i => `<li>${i}</li>`).join('')}</ul>
       </section>`;
     }).join('')}
-    ${o ? `<a class="btn" href="${DM}">Prijavi se porukom na Instagramu</a>` : ''}
+    ${open ? `<a class="btn" href="${DM}">Prijavi se porukom na Instagramu</a>` : ''}
     <p class="muted" style="font-size:12px;margin:0">Edukativni sadržaj, nije finansijski savet. Trgovanje nosi rizik gubitka uloženog kapitala.</p>`;
   },
 
