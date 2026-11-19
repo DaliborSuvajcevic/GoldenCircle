@@ -370,6 +370,7 @@ const render = (keepScroll) => {
   view.innerHTML = screens[current]();
   document.body.classList.toggle('menu-open', current === 'meni' || current === 'prijava');
   document.body.classList.toggle('embed-open', current === 'dnevnik');
+  document.documentElement.classList.toggle('nobar', ['meni', 'prijava', 'dnevnik'].includes(current));
   const act = current === 'dnevnik' ? 'trading' : current === 'masterclass' ? 'biznis' : current;
   document.querySelectorAll('.tabbar a').forEach(a => a.dataset.tab === act ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
   if (current === 'trading') updateCalc();
