@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Golden Circle · Pravno</title>
+<script>try{var t=JSON.parse(localStorage.getItem('gc:v1')||'{}').theme;document.documentElement.dataset.theme=t==='light'?'light':'dark'}catch(e){}</script>
+<link rel="icon" href="crown.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: formalno, mirno, autoritativno; pravni tekst koji se čita bez napora
+   IDEA: štampani dokument brenda, krem papir sa tankim zlatnim linijama
+   PICTURE: originalna kruna kao pečat na vrhu, zlatna linija ispod naslova
+   COLOUR and TYPE: krem #F7F3EA, crna #111111, zlato #FFB132 samo za linije; Playfair Display + Inter
+   LAYOUT: jedna kolona do 720px, prekidač između dva dokumenta, sadržaj sekcija kao red linkova */
+:root{color-scheme:light dark;--bg:light-dark(#F7F3EA,#111111);--ink:light-dark(#111111,#F7F3EA);--muted:light-dark(#5E584E,#A8A39A);--line:light-dark(#E4DCCB,#2C2C2C);--card:light-dark(#FFFFFF,#161616);--gold:#FFB132;--goldText:light-dark(#8A5A00,#FFB132)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:120px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 Inter,system-ui,sans-serif;overflow-x:clip}
+.wrap{max-width:720px;margin:0 auto;padding:0 max(5vw,18px)}
+header{text-align:center;padding:48px 0 28px}
+header img{width:76px;height:76px;object-fit:contain;display:block;margin:0 auto 18px}
+.brand{font-size:13px;font-weight:600;color:var(--goldText)}
+h1{font:500 clamp(32px,6vw,44px)/1.1 'Playfair Display',Georgia,serif;margin:10px 0 0;text-wrap:balance}
+.rule{width:64px;height:1px;background:var(--gold);margin:22px auto 0;border:0}
+.draft{margin:26px 0 0;padding:14px 16px;border:1px solid var(--gold);border-radius:12px;background:var(--card);font-size:14px;color:var(--ink)}
+.draft strong{font-weight:600}
+.switch{position:sticky;top:0;z-index:5;background:var(--bg);padding:14px 0;border-bottom:1px solid var(--line)}
+.seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:4px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
+.seg a{min-height:44px;display:flex;align-items:center;justify-content:center;border-radius:9px;font-weight:600;font-size:14px;text-align:center;padding:0 4px;color:var(--muted);text-decoration:none}
+.seg a[aria-current=page]{background:var(--ink);color:var(--bg)}
+.seg a:focus-visible,.toc a:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--muted);padding:22px 0 6px}
+.toc{display:flex;gap:8px;overflow-x:auto;padding:10px 0 4px;scrollbar-width:thin}
+.toc a{flex:none;font-size:13px;color:var(--ink);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:7px 12px;background:var(--card)}
+section.doc{padding-bottom:40px}
+section.doc[hidden]{display:none}
+h2{font:500 24px/1.25 'Playfair Display',Georgia,serif;margin:40px 0 10px;padding-top:18px;border-top:1px solid var(--line)}
+h2 span{display:block;font:600 13px/1 Inter,sans-serif;color:var(--goldText);margin-bottom:10px}
+h3{font-size:16px;font-weight:600;margin:20px 0 6px}
+p{margin:0 0 12px}
+ul{margin:0 0 12px;padding-left:20px}li{margin:0 0 6px}
+li::marker{color:var(--gold)}
+a{color:var(--ink);text-decoration-color:var(--gold);text-underline-offset:3px}
+.note{font-size:14px;color:var(--muted);border-left:0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:14px 0}
+.ph{background:light-dark(#FFF1D6,#2A2214);border-radius:4px;padding:0 4px;font-weight:600;white-space:nowrap}
+footer{text-align:center;font-size:13px;color:var(--muted);padding:28px 0 48px;border-top:1px solid var(--line)}
+footer img{width:28px;height:28px;object-fit:contain;display:block;margin:0 auto 10px;opacity:.9}
+@media (prefers-reduced-motion:no-preference){section.doc{animation:in .25s ease}@keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <a href="index.html#meni" style="display:inline-flex;min-height:44px;align-items:center;font-size:14px;text-decoration:none;color:var(--muted);float:left">← Nazad</a>
+  <img src="crown.png" alt="The Golden Circle kruna">
+  <div class="brand">The Golden Circle</div>
+  <h1>Uslovi korišćenja i privatnost</h1>
+  <hr class="rule">
+  <p class="draft"><strong>Nacrt za proveru.</strong> Ovaj tekst nije pravni savet. Pre objavljivanja treba da ga pregleda pravnik koji poznaje propise Republike Srbije. Polja označena <span class="ph">ovako</span> treba popuniti.</p>
+</header>
+
+<nav class="switch" aria-label="Izbor dokumenta">
+  <div class="seg">
+    <a href="#uslovi" id="tab-uslovi">Uslovi</a>
+    <a href="#privatnost" id="tab-privatnost">Privatnost</a>
+  </div>
+</nav>
+
+<section class="doc" id="uslovi" aria-labelledby="tab-uslovi">
+  <div class="meta"><span>Verzija 1.0</span><span>Važi od: <span class="ph">DATUM</span></span><span>Vlasnik: Dalibor Suvajčević</span></div>
+  <div class="toc" aria-label="Sadržaj">
+    <a href="#u1">Opšte odredbe</a><a href="#u2">Aplikacija</a><a href="#u3">Trading rizik</a><a href="#u4">Autorska prava</a><a href="#u5">Zabranjeno</a><a href="#u6">Kršenje</a><a href="#u7">Poverljivost</a><a href="#u8">Kupovina</a><a href="#u9">Izmene</a><a href="#u10">Pravo i sud</a><a href="#u11">Kontakt</a>
+  </div>
+
+  <h2 id="u1"><span>Član 1</span>Opšte odredbe</h2>
+  <p>Ovi Uslovi korišćenja (u daljem tekstu: Uslovi) uređuju prava i obaveze između Dalibora Suvajčevića, vlasnika brenda The Golden Circle (u daljem tekstu: Autor), i svakog lica koje koristi aplikaciju The Golden Circle ili drugi sadržaj, proizvode i usluge brenda (u daljem tekstu: Korisnik).</p>
+  <p>Uslovi važe za aplikaciju The Golden Circle, Discord server, Beacons.ai stranicu, Gumroad prodavnicu, Instagram profile i sve ostale digitalne kanale brenda.</p>
+  <p>Korišćenjem aplikacije, kupovinom proizvoda ili pridruživanjem zajednici Korisnik potvrđuje da je pročitao i prihvatio ove Uslove. Ako se sa Uslovima ne slaže, ne treba da koristi aplikaciju i sadržaj.</p>
+
+  <h2 id="u2"><span>Član 2</span>Aplikacija i njeni alati</h2>
+  <p>Aplikacija sadrži alate za lični rad i trading disciplinu: dnevne zadatke i pregled dana, kalkulator rizika i veličine pozicije, trading dnevnik, prikaz trgovačkih sesija i igru Snake.</p>
+  <ul>
+    <li>Aplikacija se pruža u stanju u kome jeste. Autor ne garantuje neprekidan rad, odsustvo grešaka niti trajno čuvanje podataka.</li>
+    <li>Rezultati kalkulatora zavise isključivo od podataka koje unese Korisnik. Korisnik je dužan da ih proveri kod svog brokera pre otvaranja pozicije.</li>
+    <li>Autor može da menja, dopunjuje ili ukine pojedine funkcije aplikacije.</li>
+  </ul>
+
+  <h2 id="u3"><span>Član 3</span>Odricanje od odgovornosti: trading</h2>
+  <p>Sadržaj koji se deli u okviru The Golden Circle, uključujući aplikaciju i njene alate, Discord, Instagram, Telegram, PDF fajlove, kurseve i druge materijale, namenjen je isključivo u edukativne i informativne svrhe.</p>
+  <ul>
+    <li>Dalibor Suvajčević nije registrovani finansijski savetnik.</li>
+    <li>Sve informacije predstavljaju lična mišljenja i iskustva Autora. One ne predstavljaju finansijski savet, preporuku za investiranje niti preporuku za kupovinu ili prodaju bilo kog finansijskog instrumenta.</li>
+    <li>Trgovanje na finansijskim tržištima, posebno uz korišćenje finansijske poluge (leverage), nosi visok nivo rizika i može dovesti do gubitka celokupnog uloženog kapitala. Prošli rezultati ne garantuju buduće rezultate.</li>
+    <li>Svaki Korisnik je sam odgovoran za sopstvene odluke i rezultate i trguje isključivo na sopstveni rizik.</li>
+  </ul>
+  <p>Autor ne snosi odgovornost za bilo kakve finansijske gubitke ili odluke koje Korisnik donese na osnovu sadržaja ili alata brenda.</p>
+
+  <h2 id="u4"><span>Član 4</span>Autorska prava i zaštićeni sadržaj</h2>
+  <p>Sav sadržaj objavljen pod brendom The Golden Circle predstavlja intelektualnu svojinu Autora i zaštićen je Zakonom o autorskom i srodnim pravima Republike Srbije. Zaštićeni sadržaj obuhvata, ali nije ograničen na:</p>
+  <ul>
+    <li>Golden Masterclass: trading strategiju i sve edukativne materijale</li>
+    <li>Golden Starter Kit: uvodne materijale za početnike</li>
+    <li>Golden Clarity: AI prompt pakete za kreatore</li>
+    <li>aplikaciju The Golden Circle, Golden Trading Journal, Gold Risk Calculator, igru Snake i njihov izvorni kod</li>
+    <li>logo sa krunom, vizuelni identitet, highlight ikone i dizajn materijala</li>
+    <li>trading analize, grafike i tržišne preglede objavljene na bilo kom kanalu</li>
+    <li>live trading sesije i njihove snimke</li>
+    <li>mindset sadržaj, tekstove i poruke objavljene pod brendom</li>
+  </ul>
+  <p>Korisnik kupovinom ili pristupom dobija samo lično, neprenosivo pravo korišćenja. Kupovinom se ne stiču autorska prava.</p>
+
+  <h2 id="u5"><span>Član 5</span>Zabranjeno korišćenje</h2>
+  <p>Bez prethodne pisane saglasnosti Autora, Korisniku je zabranjeno:</p>
+  <ul>
+    <li>da kopira, preuzima radi deljenja ili umnožava zaštićeni sadržaj</li>
+    <li>da sadržaj deli ili prosleđuje trećim licima putem bilo kog kanala (Discord, WhatsApp, Telegram, e-mail, društvene mreže i slično)</li>
+    <li>da snima ekran tokom live trading sesija ili umnožava edukativni sadržaj</li>
+    <li>da sadržaj koristi u komercijalne svrhe, preprodaje ga, licencira ili omogućava pristup trećim licima</li>
+    <li>da kopira, menja ili rastavlja izvorni kod aplikacije i alata</li>
+    <li>da uklanja ili menja autorske oznake, logotip ili znak ©</li>
+    <li>da aplikaciju koristi na način koji ometa njen rad ili ugrožava druge korisnike</li>
+  </ul>
+
+  <h2 id="u6"><span>Član 6</span>Posledice kršenja Uslova</h2>
+  <p>U slučaju kršenja ovih Uslova, Autor ima pravo:</p>
+  <ul>
+    <li>da Korisnika privremeno ili trajno isključi iz zajednice (Discord i drugi kanali)</li>
+    <li>da Korisniku ukine pristup plaćenom proizvodu ili usluzi, ako je kršenje utvrđeno (na primer deljenje plaćenog materijala trećim licima). O tome Korisnik dobija obaveštenje na e-mail adresu koju je ostavio pri kupovini, sa navedenim razlogom.</li>
+    <li>da zahteva naknadu stvarno pretrpljene štete u skladu sa Zakonom o obligacionim odnosima i Zakonom o autorskom i srodnim pravima</li>
+    <li>da pokrene postupak pred nadležnim sudom</li>
+  </ul>
+  <p>Povreda autorskih prava može predstavljati i krivično delo prema Krivičnom zakoniku Republike Srbije.</p>
+  <p class="note">Ovim članom se ne ograničavaju prava koja potrošač ima po Zakonu o zaštiti potrošača.</p>
+
+  <h2 id="u7"><span>Član 7</span>Poverljivost</h2>
+  <p>Korisnik se obavezuje da trećim licima neće otkrivati strategije, analize niti druge informacije koje je dobio kroz plaćene proizvode i zatvorenu zajednicu The Golden Circle. Ova obaveza važi i posle prestanka korišćenja.</p>
+
+  <h2 id="u8"><span>Član 8</span>Kupovina proizvoda</h2>
+  <p>Proizvodi se kupuju putem spoljnih platformi (na primer Gumroad). Na plaćanje se primenjuju i uslovi te platforme. Cena, sadržaj i način isporuke navedeni su na stranici proizvoda.</p>
+  <p>Prava potrošača utvrđena Zakonom o zaštiti potrošača, uključujući pravila o odustanku od ugovora za digitalni sadržaj, nisu ograničena ovim Uslovima.</p>
+
+  <h2 id="u9"><span>Član 9</span>Izmene Uslova</h2>
+  <p>Autor može da izmeni ove Uslove. Nova verzija se objavljuje u aplikaciji, sa datumom početka važenja. O bitnim izmenama Korisnik se obaveštava u aplikaciji pre nego što stupe na snagu. Nastavak korišćenja posle stupanja izmena na snagu znači prihvatanje nove verzije.</p>
+
+  <h2 id="u10"><span>Član 10</span>Merodavno pravo i nadležnost</h2>
+  <p>Na ove Uslove primenjuje se pravo Republike Srbije. Za sporove je nadležan Osnovni sud u Novom Sadu, osim ako zakon za sporove sa potrošačima ne propisuje drugačiju nadležnost.</p>
+
+  <h2 id="u11"><span>Član 11</span>Kontakt</h2>
+  <p>Za pitanja o ovim Uslovima, autorskim pravima i dozvolama: <a href="mailto:thegoldencirclee@proton.me">thegoldencirclee@proton.me</a></p>
+</section>
+
+<section class="doc" id="privatnost" aria-labelledby="tab-privatnost" hidden>
+  <div class="meta"><span>Verzija 1.0</span><span>Važi od: <span class="ph">DATUM</span></span><span>Rukovalac: Dalibor Suvajčević</span></div>
+  <div class="toc" aria-label="Sadržaj">
+    <a href="#p1">Ko obrađuje</a><a href="#p2">Podaci u aplikaciji</a><a href="#p3">Kontakt i kupovina</a><a href="#p4">Treće strane</a><a href="#p5">Čuvanje</a><a href="#p6">Vaša prava</a><a href="#p7">Maloletnici</a><a href="#p8">Izmene</a>
+  </div>
+
+  <h2 id="p1"><span>Član 1</span>Ko obrađuje podatke</h2>
+  <p>Rukovalac podacima je Dalibor Suvajčević, vlasnik brenda The Golden Circle, <span class="ph">ADRESA</span>, e-mail: <a href="mailto:thegoldencirclee@proton.me">thegoldencirclee@proton.me</a>.</p>
+  <p>Ova politika objašnjava koje podatke o ličnosti prikupljamo kroz aplikaciju The Golden Circle i kanale brenda, zašto i koja prava imate, u skladu sa Zakonom o zaštiti podataka o ličnosti Republike Srbije.</p>
+
+  <h2 id="p2"><span>Član 2</span>Podaci koje unosite u aplikaciju</h2>
+  <p>Aplikacija ne traži registraciju. Zadaci, unosi u trading dnevnik, vrednosti iz kalkulatora i podešavanja (na primer tamni ili svetli režim) čuvaju se samo na Vašem uređaju, u memoriji pretraživača. Ne šaljemo ih na naš server i ne vidimo ih.</p>
+  <ul>
+    <li>Brisanjem podataka pretraživača ili aplikacije ovi podaci se trajno brišu i ne mogu se vratiti.</li>
+    <li>Ako aplikaciju koristite na više uređaja, podaci se ne prenose između njih.</li>
+  </ul>
+  <p class="note">Ovaj član važi dok aplikacija radi bez naloga i servera. Ako se uvede prijava ili sinhronizacija podataka, politika se menja pre nego što ta funkcija postane dostupna.</p>
+
+  <h2 id="p3"><span>Član 3</span>Kontakt, kupovina i zajednica</h2>
+  <p>Kada nam pišete e-mailom ili porukom, obrađujemo Vaše ime, adresu ili korisničko ime i sadržaj poruke da bismo Vam odgovorili. Kada kupite proizvod, platforma za prodaju nam dostavlja podatke potrebne za isporuku i podršku (ime, e-mail, kupljeni proizvod). Podatke o platnoj kartici ne dobijamo i ne čuvamo.</p>
+  <p>Osnov obrade je izvršenje ugovora (kupovina) i Vaš zahtev (kontakt).</p>
+
+  <h2 id="p4"><span>Član 4</span>Treće strane</h2>
+  <p>Aplikacija i kanali brenda koriste spoljne servise koji mogu obrađivati tehničke podatke, na primer IP adresu:</p>
+  <ul>
+    <li>GitHub Pages: hosting aplikacije</li>
+    <li><span class="ph">Google Fonts ili lokalni fontovi</span>: učitavanje fontova</li>
+    <li>Gumroad: prodaja i plaćanje</li>
+    <li>Discord i Instagram: zajednica i komunikacija</li>
+  </ul>
+  <p>Na te servise se primenjuju njihove politike privatnosti. Linkovi ka spoljnim stranicama vode van aplikacije. Vaše podatke ne prodajemo i ne ustupamo u marketinške svrhe.</p>
+
+  <h2 id="p5"><span>Član 5</span>Koliko dugo čuvamo podatke</h2>
+  <p>Prepisku čuvamo koliko je potrebno da odgovorimo i rešimo pitanje, a najduže <span class="ph">ROK</span>. Podatke o kupovini čuvamo onoliko koliko zahtevaju poreski i računovodstveni propisi.</p>
+
+  <h2 id="p6"><span>Član 6</span>Vaša prava</h2>
+  <p>U vezi sa podacima koje mi obrađujemo imate pravo na pristup, ispravku, brisanje, ograničenje obrade, prenosivost podataka i prigovor. Zahtev šaljete na <a href="mailto:thegoldencirclee@proton.me">thegoldencirclee@proton.me</a>. Odgovaramo u zakonskom roku.</p>
+  <p>Ako smatrate da su Vam prava povređena, možete podneti pritužbu Povereniku za informacije od javnog značaja i zaštitu podataka o ličnosti.</p>
+
+  <h2 id="p7"><span>Član 7</span>Maloletnici</h2>
+  <p>Trading sadržaj i proizvodi brenda namenjeni su punoletnim licima. Svesno ne prikupljamo podatke lica mlađih od 18 godina.</p>
+
+  <h2 id="p8"><span>Član 8</span>Izmene politike</h2>
+  <p>Novu verziju objavljujemo u aplikaciji sa datumom početka važenja. O bitnim izmenama obaveštavamo Vas u aplikaciji.</p>
+</section>
+
+<footer>
+  <img src="crown.png" alt="">
+  © 2026 The Golden Circle · Dalibor Suvajčević. Sva prava zadržana.
+</footer>
+</div>
+<script>
+{
+  const docs = ['uslovi', 'privatnost'];
+  const pDoc = id => {
+    if (docs.includes(id)) return id;
+    const el = id && document.getElementById(id);
+    const sec = el && el.closest('section.doc');
+    return sec ? sec.id : 'uslovi';
+  };
+  const show = () => {
+    const id = location.hash.slice(1);
+    const cur = pDoc(id);
+    for (const d of docs) {
+      document.getElementById(d).hidden = d !== cur;
+      const t = document.getElementById('tab-' + d);
+      if (d === cur) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current');
+    }
+    if (docs.includes(id)) window.scrollTo({ top: 0 });
+  };
+  window.addEventListener('hashchange', show);
+  show();
+}
+</script>
+</body>
+</html>
