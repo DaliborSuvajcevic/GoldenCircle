@@ -1,0 +1,10 @@
+{
+  "name": "The Golden Circle",
+  "short_name": "Golden Circle",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#111111",
+  "theme_color": "#111111",
+  "icons": [{"src": "crown.png", "sizes": "500x500", "type": "image/png", "purpose": "any"}]
+}
