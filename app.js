@@ -110,9 +110,9 @@ const dayOfYear = () => { const n = new Date(); return Math.floor((n - new Date(
 const CAMPAIGN = {start: '2026-11-19', days: 30, end: '2026-12-18', offerEnd: '2026-12-30', spots: 10};
 const DM = 'https://ig.me/m/onegoldenboyy';
 const OFFERS = [
-  {id: 'beta', name: 'Masterclass + mentorstvo', price: '150 €', old: '', when: 'Samo za prvih 10 kupaca, uz kod PRVIH10', tag: 'PRVIH 10', code: 'PRVIH10',
+  {id: 'beta', name: 'Masterclass + mentorstvo', price: '150 €', old: '', when: 'Samo za prvih 10 kupaca, uz kod PRVIH10', tag: 'PRVIH 10', code: 'PRVIH10', url: 'https://goldenboyy.gumroad.com/l/nwidl/PRVIH10', cta: 'Kupi za 150 €',
    inc: ['Golden Masterclass, kompletna trading strategija', 'Mesec dana mentorstva, 3 puta nedeljno po 1 sat', 'Samo 10 mesta']},
-  {id: 'main', name: 'Masterclass', price: '250 €', old: '300 €', when: 'Cena važi do 30.12.', tag: 'DO 30.12.',
+  {id: 'main', name: 'Masterclass', price: '250 €', old: '300 €', when: 'Cena važi do 30.12.', tag: 'DO 30.12.', url: 'https://goldenboyy.gumroad.com/l/nwidl', cta: 'Kupi za 250 €',
    inc: ['Golden Masterclass, kompletna trading strategija', '1 sat mentorstva', 'Cena 250 € umesto 300 €, samo do 30.12.']}
 ];
 const offerOpen = () => { const t = today(); return t >= CAMPAIGN.start && t <= CAMPAIGN.offerEnd; };
@@ -298,11 +298,11 @@ const screens = {
         <div class="row" style="align-items:baseline;justify-content:flex-start;gap:12px"><span class="big gold">${x.price}</span>${x.old ? `<s class="muted">${x.old}</s>` : ''}</div>
         <span class="muted" style="font-size:13px">${x.when}</span>
         <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px">${x.inc.map(i => `<li>${i}</li>`).join('')}</ul>
-        ${x.code ? `<div class="row" style="border-top:1px solid var(--line);padding-top:12px"><span class="muted" style="font-size:13px">Kod pri plaćanju</span><b class="gold" style="letter-spacing:.08em">${x.code}</b></div>` : ''}
+        ${x.code ? `<div class="row" style="border-top:1px solid var(--line);padding-top:12px"><span class="muted" style="font-size:13px">Kod se primenjuje sam</span><b class="gold" style="letter-spacing:.08em">${x.code}</b></div>` : ''}
+        ${open ? `<a class="btn ${x.id === 'beta' ? '' : 'ghost'}" href="${x.url}">${x.cta}</a>` : ''}
       </section>`;
     }).join('')}
-    ${open ? `<a class="btn" href="${LINKS.masterclass}">Kupi na Gumroadu</a>
-    <a class="btn ghost" href="${DM}">Pitanja? Piši na Instagramu</a>` : ''}
+    ${open ? `<a class="link" style="align-self:center" href="${DM}">Pitanja? Piši na Instagramu</a>` : ''}
     <p class="muted" style="font-size:12px;margin:0">Edukativni sadržaj, nije finansijski savet. Trgovanje nosi rizik gubitka uloženog kapitala.</p>`;
   },
 
