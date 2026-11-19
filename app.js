@@ -114,7 +114,7 @@ const OFFERS = [
   {id: 'beta', name: 'Masterclass + mentorstvo', price: '150 €', old: '', when: 'Samo za prvih 10 kupaca, uz kod PRVIH10', tag: 'PRVIH 10', code: 'PRVIH10', url: 'https://goldenboyy.gumroad.com/l/nwidl/PRVIH10', cta: 'Kupi za 150 €',
    inc: ['Golden Masterclass, kompletna trading strategija', 'Mesec dana mentorstva, 3 puta nedeljno po 1 sat', 'Samo 10 mesta']},
   {id: 'main', name: 'Masterclass', price: '250 €', old: '300 €', when: 'Cena važi do 30.12.', tag: 'DO 30.12.', url: 'https://goldenboyy.gumroad.com/l/nwidl', cta: 'Kupi za 250 €',
-   inc: ['Golden Masterclass, kompletna trading strategija', '1 sat mentorstva', 'Cena 250 € umesto 300 €, samo do 30.12.']}
+   inc: ['Golden Masterclass, kompletna trading strategija', 'Jedan dan, jedan sat mentorstva', 'Cena 250 € umesto 300 €, samo do 30.12.']}
 ];
 const offerOpen = () => { const t = today(); return t >= CAMPAIGN.start && t <= CAMPAIGN.offerEnd; };
 const campaign = () => {
