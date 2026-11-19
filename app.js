@@ -14,7 +14,9 @@ const LINKS = {
   snake: 'https://daliborsuvajcevic.github.io/snake/',
   card: 'https://daliborsuvajcevic.github.io/digital-card/',
   instagram: 'https://www.instagram.com/onegoldenboyy/',
-  starter: 'https://goldenboyy.gumroad.com/l/xvexk'
+  starter: 'https://goldenboyy.gumroad.com/l/xvexk',
+  masterclass: 'https://goldenboyy.gumroad.com/l/nwidl',
+  clarity: 'https://goldenboyy.gumroad.com/l/wfoepq'
 };
 const CHEV = '<svg class="chev" aria-hidden="true" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>';
 const CHECK = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>';
@@ -256,7 +258,7 @@ const screens = {
     <section class="list" aria-label="Proizvodi">
       <span class="eyebrow">PROIZVODI</span>
       <a class="item" href="#masterclass"><span class="t"><b>Golden Masterclass</b><small>Prvih 10: 150 € · do 30.12.: 250 €</small></span><span class="p">250 €</span></a>
-      <div class="item"><span class="t"><b>Golden Clarity</b><small>PDF za kreatore</small></span><span class="p">15–19 €</span></div>
+      <a class="item" href="${LINKS.clarity}"><span class="t"><b>Golden Clarity</b><small>PDF za kreatore · Gumroad</small></span><span class="p">4,99 €</span></a>
       <a class="item" href="${LINKS.starter}"><span class="t"><b>Golden Starter Kit</b><small>Forex za početnike · Gumroad</small></span><span class="p">Besplatno</span></a>
     </section>`;
   },
@@ -298,7 +300,8 @@ const screens = {
         <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px">${x.inc.map(i => `<li>${i}</li>`).join('')}</ul>
       </section>`;
     }).join('')}
-    ${open ? `<a class="btn" href="${DM}">Prijavi se porukom na Instagramu</a>` : ''}
+    ${open ? `<a class="btn" href="${LINKS.masterclass}">Kupi na Gumroadu</a>
+    <a class="btn ghost" href="${DM}">Pitanja? Piši na Instagramu</a>` : ''}
     <p class="muted" style="font-size:12px;margin:0">Edukativni sadržaj, nije finansijski savet. Trgovanje nosi rizik gubitka uloženog kapitala.</p>`;
   },
 
