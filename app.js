@@ -169,7 +169,7 @@ const stepCard = () => {
 const embed = (label, url, back, title) => `<div class="embed-top"><a class="round" href="#${back}" aria-label="Nazad"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a>
     <span class="eyebrow">${label}</span><img src="crown.png" alt="The Golden Circle kruna" style="width:30px;height:30px;object-fit:contain"></div>
   <iframe class="embed" src="${url}" title="${title}" loading="eager"></iframe>`;
-const EMBEDS = Object.assign(Object.create(null), {dnevnik: 'trading', process: 'disciplina', kartica: 'krug'});
+const EMBEDS = Object.assign(Object.create(null), {dnevnik: 'trading', process: 'disciplina', kartica: 'krug', snake: 'krug'});
 
 /* ---------- ekrani ---------- */
 const screens = {
@@ -308,7 +308,7 @@ const screens = {
       <div class="path">${pillars.map((p, i) => `<div><i>${i + 1}</i><span>${p}</span></div>`).join('')}</div>
     </section>
     <section class="list" aria-label="Ekosistem">
-      <a class="item" href="${LINKS.snake}"><span class="t"><b class="serif" style="font-size:17px">Snake</b><small>Igraj</small></span>${CHEV}</a>
+      <a class="item" href="#snake"><span class="t"><b class="serif" style="font-size:17px">Snake</b><small>Igraj</small></span>${CHEV}</a>
     </section>
     <div class="tiles">
       <a class="tile" href="${LINKS.instagram}"><span>Instagram</span><b style="font:500 14px Inter">@onegoldenboyy</b></a>
@@ -343,6 +343,7 @@ const screens = {
   dnevnik() { return embed('TRADING JOURNAL', LINKS.journal, 'trading', 'Golden Trading Journal'); },
   process() { return embed('PROCESS', LINKS.process, 'disciplina', 'Process'); },
   kartica() { return embed('KONTAKT', LINKS.card, 'krug', 'Digitalna kartica'); },
+  snake() { return embed('SNAKE', LINKS.snake, 'krug', 'Snake'); },
 
   prijava() {
     return `<div class="hero" style="padding-top:12vh">
