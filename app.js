@@ -145,6 +145,26 @@ const taskList = (d) => {
   }).join('');
 };
 
+/* korak za danas, iz jučerašnjeg večernjeg pregleda */
+const stepFromYesterday = () => {
+  const y = addDays(today(), -1), yd = pDay(y);
+  const step = yd && String(yd.review.next || '').trim();
+  if (!step || gc.stepDismissed === y) return null;
+  const t = pDay(today());
+  if (t && t.tasks.some(x => x.name.trim().toLowerCase() === step.slice(0, 120).toLowerCase())) return null;
+  return step;
+};
+const stepCard = () => {
+  const s = stepFromYesterday();
+  if (!s) return '';
+  return `<section class="card hi" aria-label="Korak od juče">
+    <div class="row"><span class="eyebrow">KORAK OD JUČE</span>
+      <button class="del" data-a="step-dismiss" aria-label="Sakrij korak od juče" style="margin:-10px -10px -10px 0"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    <p class="quote" style="font-size:19px">${esc(s)}</p>
+    <button class="btn" data-a="step-add">Dodaj kao zadatak</button>
+  </section>`;
+};
+
 /* ---------- ekrani ---------- */
 const screens = {
   pocetna() {
@@ -157,6 +177,8 @@ const screens = {
     const dateStr = new Date().toLocaleDateString('sr-Latn-RS', {weekday: 'long', day: 'numeric', month: 'long'});
     return `${top()}
     <div><div class="date">${dateStr}</div><h1>${hi}, ${esc(gc.name)}.</h1></div>
+
+    ${stepCard()}
 
     <section class="card inv" aria-label="Standard dana">
       <div class="row"><span class="eyebrow">STANDARD DANA</span><b>${d.tasks.length ? `${doneN(d)} / ${d.tasks.length}` : 'Bez zadataka'}</b></div>
@@ -203,6 +225,7 @@ const screens = {
       <div class="card" style="padding:14px;gap:2px"><span class="muted" style="font-size:11px">Niz</span><b class="gold" style="font-size:20px">${streak()} ${streak() === 1 ? 'dan' : 'dana'}</b></div>
       <div class="card" style="padding:14px;gap:2px"><span class="muted" style="font-size:11px">Nedelja</span><b style="font-size:20px">${w == null ? '–' : w + '%'}</b></div>
     </div>
+    ${stepCard()}
     <section style="display:flex;flex-direction:column;gap:10px" aria-label="Zadaci za danas">
       <span class="eyebrow">ZADACI ZA DANAS</span>
       ${taskList(d)}
@@ -213,9 +236,14 @@ const screens = {
       </form>
     </section>
     <section class="card inv" aria-label="Večernji pregled">
-      <span class="eyebrow">VEČERNJI PREGLED</span>
+      ${d.reviewDone ? `<div class="row"><span class="eyebrow">DAN ZAVRŠEN</span><button class="link" data-a="review-edit" style="border:0">Izmeni</button></div>
+      <p class="quote">${doneN(d)} od ${d.tasks.length} ${d.tasks.length === 1 ? 'zadatka' : 'zadataka'} · ${rv(d)} od 5 odgovora</p>
+      ${Q.filter(([id]) => String(d.review[id]).trim()).map(([id, q]) => `<div style="display:flex;flex-direction:column;gap:4px"><span class="muted" style="font-size:12px">${q}</span><span style="white-space:pre-line">${esc(d.review[id])}</span></div>`).join('')}
+      ${String(d.review.next).trim() ? '<span class="muted" style="font-size:12px">Sutra te korak čeka na Početnoj.</span>' : ''}`
+      : `<span class="eyebrow">VEČERNJI PREGLED</span>
       ${Q.map(([id, q]) => `<label class="q">${q}<textarea class="field" data-r="${id}" rows="2" maxlength="1000">${esc(d.review[id])}</textarea></label>`).join('')}
-      <span class="muted" style="font-size:12px">Čuva se automatski, zajedno sa Process alatom.</span>
+      <button class="btn" data-a="review-done">Završi dan</button>
+      <span class="muted" style="font-size:12px">Odgovori se čuvaju dok kucaš. Korak za sutra ti se sutra prikazuje na Početnoj.</span>`}
     </section>
     <a class="btn ghost" href="${LINKS.process}">Otvori ceo Process</a>`;
   },
@@ -408,7 +436,19 @@ function updateCalc() {
 view.addEventListener('click', e => {
   const b = e.target.closest('[data-a]'); if (!b) return;
   const a = b.dataset.a;
-  if (a === 'del') {
+  if (a === 'review-done') {
+    clearTimeout(rt);
+    mutateToday(d => { view.querySelectorAll('textarea[data-r]').forEach(t => { d.review[t.dataset.r] = t.value; }); d.reviewDone = true; });
+    render(true); toast('Dan je završen');
+  } else if (a === 'review-edit') {
+    mutateToday(d => { d.reviewDone = false; }); render(true);
+  } else if (a === 'step-add') {
+    const s = stepFromYesterday(); if (!s) return;
+    mutateToday(d => d.tasks.unshift({id: Date.now(), name: s.slice(0, 120), cat: '', prio: 2, status: 'todo', dur: '', note: ''}));
+    render(true); toast('Korak je dodat kao zadatak');
+  } else if (a === 'step-dismiss') {
+    gc.stepDismissed = addDays(today(), -1); saveGc(); render(true);
+  } else if (a === 'del') {
     const i = +b.dataset.i;
     mutateToday(d => { d.tasks.splice(i, 1); });
     render(true); toast('Zadatak obrisan');
