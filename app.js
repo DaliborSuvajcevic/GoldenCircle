@@ -41,7 +41,8 @@ const Q = [['good','Šta sam danas uradio dobro?'],['better','Šta sam mogao bol
 const EMPTY_REVIEW = {good:'',better:'',learned:'',distract:'',next:''};
 const pSettings = () => { const s = read(P + 'settings'); return s && Array.isArray(s.template) ? {minDay: Math.min(100, Math.max(1, +s.minDay || 70)), template: s.template.filter(t => t && typeof t.name === 'string')} : structuredClone(DEF_SET); };
 const pDay = k => { const d = read(P + 'day:' + k); if (d && Array.isArray(d.tasks)) { d.review = {...EMPTY_REVIEW, ...d.review}; return d; } return null; };
-const pNew = k => ({tasks: pSettings().template.map((t, i) => ({id: k + i, name: t.name, cat: t.cat || '', prio: 2, status: 'todo', dur: '', note: ''})), review: {...EMPTY_REVIEW}, mood: 0, energy: 0, discipline: 0, focus: 0, skipped: false, score: 0, createdAt: new Date().toISOString(), updatedAt: ''});
+/* Novi dan počinje bez zadataka: korisnik sam dodaje svoje. */
+const pNew = k => ({tasks: [], review: {...EMPTY_REVIEW}, mood: 0, energy: 0, discipline: 0, focus: 0, skipped: false, score: 0, createdAt: new Date().toISOString(), updatedAt: ''});
 const doneN = d => d.tasks.filter(t => t.status === 'done').length;
 const pct = d => d.tasks.length ? doneN(d) / d.tasks.length * 100 : 0;
 const rv = d => Object.values(d.review).filter(v => String(v).trim()).length;
@@ -132,13 +133,14 @@ const top = (title) => `<header class="top">
 
 const taskList = (d) => {
   const firstTodo = d.tasks.findIndex(t => t.status === 'todo');
-  if (!d.tasks.length) return '<p class="empty">Nema zadataka za danas. Dodaj prvi ispod.</p>';
+  if (!d.tasks.length) return '<p class="empty">Nema zadataka. Dodaj ono što danas moraš da završiš.</p>';
   return d.tasks.map((t, i) => {
     const cls = t.status === 'done' ? 'done' : t.status === 'skip' ? 'skip' : i === firstTodo ? 'next' : '';
-    const meta = t.status === 'skip' ? 'Preskočen' : i === firstTodo ? `Sledeći${t.cat ? ' · ' + esc(t.cat) : ''}` : esc(t.cat || 'Bez kategorije');
+    const meta = t.status === 'skip' ? 'Preskočen' : i === firstTodo ? `Sledeći${t.cat ? ' · ' + esc(t.cat) : ''}` : esc(t.cat || '');
     return `<div class="task ${cls}">
       <button class="chk" data-a="toggle" data-i="${i}" aria-pressed="${t.status === 'done'}" aria-label="${t.status === 'done' ? 'Vrati zadatak' : 'Završi zadatak'}: ${esc(t.name)}">${CHECK}</button>
-      <span class="t"><b>${esc(t.name)}</b><small>${meta}</small></span>
+      <span class="t"><b>${esc(t.name)}</b>${meta ? `<small>${meta}</small>` : ''}</span>
+      <button class="del" data-a="del" data-i="${i}" aria-label="Obriši zadatak: ${esc(t.name)}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     </div>`;
   }).join('');
 };
@@ -157,10 +159,10 @@ const screens = {
     <div><div class="date">${dateStr}</div><h1>${hi}, ${esc(gc.name)}.</h1></div>
 
     <section class="card inv" aria-label="Standard dana">
-      <div class="row"><span class="eyebrow">STANDARD DANA</span><b>${doneN(d)} / ${d.tasks.length}</b></div>
+      <div class="row"><span class="eyebrow">STANDARD DANA</span><b>${d.tasks.length ? `${doneN(d)} / ${d.tasks.length}` : 'Bez zadataka'}</b></div>
       <p class="quote">${STANDARDS[dayOfYear() % STANDARDS.length]}</p>
       <div class="track" role="progressbar" aria-valuenow="${p}" aria-valuemin="0" aria-valuemax="100" aria-label="Završeno danas"><i style="width:${p}%"></i></div>
-      <a class="link" href="#disciplina">Otvori zadatke</a>
+      <a class="link" href="#disciplina">${d.tasks.length ? 'Otvori zadatke' : 'Dodaj zadatke za danas'}</a>
     </section>
 
     <section class="card" aria-label="Trading danas">
@@ -406,7 +408,11 @@ function updateCalc() {
 view.addEventListener('click', e => {
   const b = e.target.closest('[data-a]'); if (!b) return;
   const a = b.dataset.a;
-  if (a === 'toggle') {
+  if (a === 'del') {
+    const i = +b.dataset.i;
+    mutateToday(d => { d.tasks.splice(i, 1); });
+    render(true); toast('Zadatak obrisan');
+  } else if (a === 'toggle') {
     const i = +b.dataset.i;
     mutateToday(d => { const t = d.tasks[i]; if (t) t.status = t.status === 'done' ? 'todo' : 'done'; });
     render(true);

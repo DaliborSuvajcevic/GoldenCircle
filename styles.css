@@ -151,3 +151,7 @@ body.menu-open .tabbar,body.embed-open .tabbar{display:none}
 body.embed-open #view{max-width:none;padding:0;gap:0;height:100dvh;display:flex;flex-direction:column}
 .embed-top{display:flex;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;border-bottom:1px solid var(--line);background:var(--bg)}
 .embed{flex:1;width:100%;border:0;display:block;background:var(--bg)}
+
+.del{width:40px;height:40px;flex:none;border:0;background:transparent;color:var(--faint);display:grid;place-items:center;cursor:pointer;border-radius:10px;margin-right:-8px}
+.del svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}
+.del:hover{color:var(--bad)}
