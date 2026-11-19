@@ -358,7 +358,7 @@ const screens = {
 
 /* ---------- ruter ---------- */
 const TABS = ['pocetna', 'disciplina', 'trading', 'biznis', 'krug'];
-let current = 'pocetna', lastTab = 'pocetna';
+let current = 'pocetna', lastTab = 'pocetna', wanted = '';
 const render = (keepScroll) => {
   const y = window.scrollY;
   view.innerHTML = screens[current]();
@@ -370,7 +370,7 @@ const render = (keepScroll) => {
 const route = () => {
   const h = location.hash.slice(1);
   current = h === 'meni' || h === 'masterclass' || TABS.includes(h) ? h : 'pocetna';
-  if (!gc.name) current = 'prijava';
+  if (!gc.name) { if (current !== 'pocetna') wanted = current; current = 'prijava'; }
   if (TABS.includes(current)) lastTab = current;
   render();
   window.scrollTo(0, 0);
@@ -412,7 +412,7 @@ view.addEventListener('submit', e => {
     const n = cleanName($(f === 'login' ? '#name' : '#rn').value);
     if (!n) return;
     gc.name = n; saveGc();
-    if (f === 'login') { location.hash = 'pocetna'; route(); } else { toast('Ime je sačuvano'); }
+    if (f === 'login') { const to = wanted || 'pocetna'; wanted = ''; location.hash = to; route(); } else { toast('Ime je sačuvano'); }
     return;
   }
   if (f !== 'add') return;
