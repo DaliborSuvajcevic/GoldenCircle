@@ -294,8 +294,8 @@ const screens = {
     <section class="list" aria-label="Proizvodi">
       <span class="eyebrow">PROIZVODI</span>
       <a class="item" href="#masterclass"><span class="t"><b>Golden Masterclass</b><small>Prvih 10: 150 € · do 30.12.: 250 €</small></span><span class="p">250 €</span></a>
-      <a class="item" href="${LINKS.clarity}"><span class="t"><b>Golden Clarity</b><small>PDF za kreatore · Gumroad</small></span><span class="p">19,99 €</span></a>
-      <a class="item" href="${LINKS.starter}"><span class="t"><b>Golden Starter Kit</b><small>Forex za početnike · Gumroad</small></span><span class="p">Besplatno</span></a>
+      <a class="item" href="${LINKS.clarity}"><span class="t"><b>Golden Clarity</b><small>PDF za kreatore</small></span><span class="p">19,99 €</span></a>
+      <a class="item" href="${LINKS.starter}"><span class="t"><b>Golden Starter Kit</b><small>Forex za početnike</small></span><span class="p">Besplatno</span></a>
     </section>`;
   },
 
