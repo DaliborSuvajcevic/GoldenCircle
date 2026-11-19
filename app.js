@@ -239,7 +239,7 @@ const screens = {
     </section>
 
     <section class="card" aria-label="Dnevnik">
-      <div class="row"><span class="eyebrow">DNEVNIK</span><a class="link" href="${LINKS.journal}">Ceo dnevnik</a></div>
+      <div class="row"><span class="eyebrow">DNEVNIK</span><a class="link" href="#dnevnik">Ceo dnevnik</a></div>
       ${j ? `<div class="stats">
           <div class="stat"><span>Danas</span><b>${j.todayCount} / ${j.maxTrades}</b></div>
           <div class="stat"><span>Rizik danas</span><b>${nf(j.todayRisk, 1)}%</b></div>
@@ -247,7 +247,7 @@ const screens = {
         </div>
         ${j.last.length ? j.last.map(t => `<div class="row" style="font-size:13px"><span>${esc(t.date.slice(0, 10).split('-').reverse().join('.'))} · ${esc(t.direction || '')}</span><b class="${t.result === 'Win' ? 'gold' : ''}">${esc(t.result || '')}</b></div>`).join('') : '<p class="empty">Nema unosa.</p>'}`
         : '<p class="empty">Dnevnik nema podataka na ovom uređaju. Unosi se pojavljuju ovde kad aplikacija i dnevnik rade na istoj adresi.</p>'}
-      <a class="btn ghost" href="${LINKS.journal}">Novi unos</a>
+      <a class="btn ghost" href="#dnevnik">Novi unos</a>
     </section>
     <p class="muted" style="font-size:12px;margin:0">Alati su edukativni i nisu finansijski savet. Proveri vrednosti kod brokera pre ulaska.</p>`;
   },
@@ -304,6 +304,12 @@ const screens = {
     }).join('')}
     ${open ? `<a class="link" style="align-self:center" href="${DM}">Pitanja? Piši na Instagramu</a>` : ''}
     <p class="muted" style="font-size:12px;margin:0">Edukativni sadržaj, nije finansijski savet. Trgovanje nosi rizik gubitka uloženog kapitala.</p>`;
+  },
+
+  dnevnik() {
+    return `<div class="embed-top"><a class="round" href="#trading" aria-label="Nazad na Trading"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a>
+      <span class="eyebrow">TRADING JOURNAL</span><img src="crown.png" alt="The Golden Circle kruna" style="width:30px;height:30px;object-fit:contain"></div>
+    <iframe class="embed" src="${LINKS.journal}" title="Golden Trading Journal" loading="eager"></iframe>`;
   },
 
   prijava() {
@@ -363,13 +369,15 @@ const render = (keepScroll) => {
   const y = window.scrollY;
   view.innerHTML = screens[current]();
   document.body.classList.toggle('menu-open', current === 'meni' || current === 'prijava');
-  document.querySelectorAll('.tabbar a').forEach(a => a.dataset.tab === current ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
+  document.body.classList.toggle('embed-open', current === 'dnevnik');
+  const act = current === 'dnevnik' ? 'trading' : current === 'masterclass' ? 'biznis' : current;
+  document.querySelectorAll('.tabbar a').forEach(a => a.dataset.tab === act ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
   if (current === 'trading') updateCalc();
   if (keepScroll) window.scrollTo(0, y);
 };
 const route = () => {
   const h = location.hash.slice(1);
-  current = h === 'meni' || h === 'masterclass' || TABS.includes(h) ? h : 'pocetna';
+  current = ['meni', 'masterclass', 'dnevnik'].includes(h) || TABS.includes(h) ? h : 'pocetna';
   if (!gc.name) { if (current !== 'pocetna') wanted = current; current = 'prijava'; }
   if (TABS.includes(current)) lastTab = current;
   render();
