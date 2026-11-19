@@ -165,6 +165,12 @@ const stepCard = () => {
   </section>`;
 };
 
+/* drugi alati sa iste adrese, otvoreni unutar aplikacije */
+const embed = (label, url, back, title) => `<div class="embed-top"><a class="round" href="#${back}" aria-label="Nazad"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a>
+    <span class="eyebrow">${label}</span><img src="crown.png" alt="The Golden Circle kruna" style="width:30px;height:30px;object-fit:contain"></div>
+  <iframe class="embed" src="${url}" title="${title}" loading="eager"></iframe>`;
+const EMBEDS = Object.assign(Object.create(null), {dnevnik: 'trading', process: 'disciplina'});
+
 /* ---------- ekrani ---------- */
 const screens = {
   pocetna() {
@@ -245,7 +251,7 @@ const screens = {
       <button class="btn" data-a="review-done">Završi dan</button>
       <span class="muted" style="font-size:12px">Odgovori se čuvaju dok kucaš. Korak za sutra ti se sutra prikazuje na Početnoj.</span>`}
     </section>
-    <a class="btn ghost" href="${LINKS.process}">Otvori ceo Process</a>`;
+    <a class="btn ghost" href="#process">Otvori ceo Process</a>`;
   },
 
   trading() {
@@ -334,11 +340,8 @@ const screens = {
     <p class="muted" style="font-size:12px;margin:0">Edukativni sadržaj, nije finansijski savet. Trgovanje nosi rizik gubitka uloženog kapitala.</p>`;
   },
 
-  dnevnik() {
-    return `<div class="embed-top"><a class="round" href="#trading" aria-label="Nazad na Trading"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a>
-      <span class="eyebrow">TRADING JOURNAL</span><img src="crown.png" alt="The Golden Circle kruna" style="width:30px;height:30px;object-fit:contain"></div>
-    <iframe class="embed" src="${LINKS.journal}" title="Golden Trading Journal" loading="eager"></iframe>`;
-  },
+  dnevnik() { return embed('TRADING JOURNAL', LINKS.journal, 'trading', 'Golden Trading Journal'); },
+  process() { return embed('PROCESS', LINKS.process, 'disciplina', 'Process'); },
 
   prijava() {
     return `<div class="hero" style="padding-top:12vh">
@@ -397,16 +400,16 @@ const render = (keepScroll) => {
   const y = window.scrollY;
   view.innerHTML = screens[current]();
   document.body.classList.toggle('menu-open', current === 'meni' || current === 'prijava');
-  document.body.classList.toggle('embed-open', current === 'dnevnik');
-  document.documentElement.classList.toggle('nobar', ['meni', 'prijava', 'dnevnik'].includes(current));
-  const act = current === 'dnevnik' ? 'trading' : current === 'masterclass' ? 'biznis' : current;
+  document.body.classList.toggle('embed-open', current in EMBEDS);
+  document.documentElement.classList.toggle('nobar', (current === 'meni' || current === 'prijava' || current in EMBEDS));
+  const act = EMBEDS[current] || (current === 'masterclass' ? 'biznis' : current);
   document.querySelectorAll('.tabbar a').forEach(a => a.dataset.tab === act ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
   if (current === 'trading') updateCalc();
   if (keepScroll) window.scrollTo(0, y);
 };
 const route = () => {
   const h = location.hash.slice(1);
-  current = ['meni', 'masterclass', 'dnevnik'].includes(h) || TABS.includes(h) ? h : 'pocetna';
+  current = ['meni', 'masterclass'].includes(h) || h in EMBEDS || TABS.includes(h) ? h : 'pocetna';
   if (!gc.name) { if (current !== 'pocetna') wanted = current; current = 'prijava'; }
   if (TABS.includes(current)) lastTab = current;
   render();
