@@ -86,7 +86,7 @@ const hm = m => `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60)
 const sessions = () => {
   const {day, min} = belgrade();
   const weekend = day === 'Sat' || day === 'Sun';
-  const noTrade = weekend ? 'Vikend: tržište je zatvoreno.' : day === 'Mon' ? 'Ponedeljak: po tvojim pravilima se ne trguje.' : day === 'Fri' ? 'Petak: po tvojim pravilima se ne trguje.' : '';
+  const noTrade = weekend ? 'Vikend: tržište je zatvoreno.' : '';
   const list = SESS.map(s => {
     const on = !noTrade && min >= s.from && min < s.to;
     const state = noTrade ? 'Bez trgovanja' : on ? `Aktivna · još ${dur(s.to - min)}` : min < s.from ? `Počinje za ${dur(s.from - min)}` : 'Završena';

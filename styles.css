@@ -41,7 +41,7 @@ h1{font:500 30px/1.15 'Playfair Display',Georgia,serif;margin:0}
 .card.inv{background:var(--inv);color:var(--invInk);border-color:var(--inv)}
 .card.inv .eyebrow,.card.inv .muted{color:var(--invMuted)}
 .card.hi{border-color:var(--gold);background:var(--hi)}
-.row{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:6px 10px;flex-wrap:wrap}
 .muted{color:var(--muted)}
 .gold{color:var(--goldText)}
 .big{font:500 34px/1.1 'Playfair Display',Georgia,serif}
