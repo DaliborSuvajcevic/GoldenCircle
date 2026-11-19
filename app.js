@@ -23,7 +23,8 @@ const CHECK = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12l5 5 9-
 const read = (k, fb = null) => { try { const v = localStorage.getItem(k); return v == null ? fb : JSON.parse(v); } catch { return fb; } };
 const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch { toast('Čuvanje nije uspelo'); return false; } };
 const GC = 'gc:v1';
-const gc = Object.assign({theme: 'dark', beta: 0, calc: {}}, read(GC, {}));
+const gc = Object.assign({theme: 'dark', beta: 0, calc: {}, name: ''}, read(GC, {}));
+const cleanName = s => String(s || '').replace(/\s+/g, ' ').trim().slice(0, 40);
 const saveGc = () => write(GC, gc);
 
 /* ---------- datumi (lokalno vreme uređaja, isto kao Process) ---------- */
@@ -143,7 +144,7 @@ const screens = {
     const sessLine = s.noTrade ? `<span class="pill muted">${s.noTrade}</span>` : s.active ? `<span class="pill gold"><i class="dot"></i>${s.active.name} sesija aktivna</span>` : s.next ? `<span class="pill muted">${s.next.name} za ${dur(s.next.from - belgrade().min)}</span>` : '<span class="pill muted">Sesije završene</span>';
     const dateStr = new Date().toLocaleDateString('sr-Latn-RS', {weekday: 'long', day: 'numeric', month: 'long'});
     return `${top()}
-    <div><div class="date">${dateStr}</div><h1>${hi}, Dača.</h1></div>
+    <div><div class="date">${dateStr}</div><h1>${hi}, ${esc(gc.name)}.</h1></div>
 
     <section class="card inv" aria-label="Standard dana">
       <div class="row"><span class="eyebrow">STANDARD DANA</span><b>${doneN(d)} / ${d.tasks.length}</b></div>
@@ -271,11 +272,36 @@ const screens = {
     </div>`;
   },
 
+  prijava() {
+    return `<div class="hero" style="padding-top:12vh">
+      <img src="crown.png" alt="The Golden Circle kruna" style="width:88px;height:88px">
+      <span class="eyebrow gold">THE GOLDEN CIRCLE</span>
+      <h1>Dobro došli.</h1>
+      <p class="sub" style="max-width:300px">Build the person. Build the life.</p>
+    </div>
+    <form class="card" data-f="login" style="margin-top:8px">
+      <label for="name" style="display:flex;flex-direction:column;gap:8px;font-weight:500">Kako se zoveš?
+        <input class="field" id="name" maxlength="40" autocomplete="given-name" autocapitalize="words" placeholder="Tvoje ime" required>
+      </label>
+      <button class="btn" type="submit">Uđi</button>
+    </form>
+    <p class="muted" style="font-size:12px;text-align:center;margin:0">Ime i svi podaci ostaju samo na ovom uređaju.<br><a href="legal.html#privatnost">Politika privatnosti</a> · <a href="legal.html#uslovi">Uslovi korišćenja</a></p>`;
+  },
+
   meni() {
     const dark = gc.theme !== 'light';
     return `<header class="top"><img src="crown.png" alt="The Golden Circle kruna"><span class="eyebrow">MENI</span>
       <a class="round" href="#${esc(lastTab)}" aria-label="Zatvori meni"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></a></header>
     <h1>Podešavanja</h1>
+    <section style="display:flex;flex-direction:column;gap:10px" aria-label="Profil">
+      <span class="eyebrow">PROFIL</span>
+      <form class="card" data-f="rename">
+        <label for="rn" style="display:flex;flex-direction:column;gap:8px;font-weight:500">Ime
+          <input class="field" id="rn" maxlength="40" autocomplete="given-name" value="${esc(gc.name)}" required>
+        </label>
+        <button class="btn ghost" type="submit">Sačuvaj ime</button>
+      </form>
+    </section>
     <section style="display:flex;flex-direction:column;gap:10px" aria-label="Izgled">
       <span class="eyebrow">IZGLED</span>
       <div class="card"><b style="font-weight:500">Režim prikaza</b>
@@ -302,7 +328,7 @@ let current = 'pocetna', lastTab = 'pocetna';
 const render = (keepScroll) => {
   const y = window.scrollY;
   view.innerHTML = screens[current]();
-  document.body.classList.toggle('menu-open', current === 'meni');
+  document.body.classList.toggle('menu-open', current === 'meni' || current === 'prijava');
   document.querySelectorAll('.tabbar a').forEach(a => a.dataset.tab === current ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
   if (current === 'trading') updateCalc();
   if (keepScroll) window.scrollTo(0, y);
@@ -310,6 +336,7 @@ const render = (keepScroll) => {
 const route = () => {
   const h = location.hash.slice(1);
   current = h === 'meni' || TABS.includes(h) ? h : 'pocetna';
+  if (!gc.name) current = 'prijava';
   if (TABS.includes(current)) lastTab = current;
   render();
   window.scrollTo(0, 0);
@@ -347,7 +374,16 @@ view.addEventListener('click', e => {
   }
 });
 view.addEventListener('submit', e => {
-  if (e.target.dataset.f !== 'add') return;
+  const f = e.target.dataset.f;
+  if (f === 'login' || f === 'rename') {
+    e.preventDefault();
+    const n = cleanName($(f === 'login' ? '#name' : '#rn').value);
+    if (!n) return;
+    gc.name = n; saveGc();
+    if (f === 'login') { location.hash = 'pocetna'; route(); } else { toast('Ime je sačuvano'); }
+    return;
+  }
+  if (f !== 'add') return;
   e.preventDefault();
   const n = $('#nt').value.trim(); if (!n) return;
   mutateToday(d => d.tasks.push({id: Date.now(), name: n.slice(0, 120), cat: '', prio: 2, status: 'todo', dur: '', note: ''}));
