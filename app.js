@@ -109,7 +109,7 @@ const CAMPAIGN = {start: '2026-11-19', days: 30, end: '2026-12-18', offerEnd: '2
 const DM = 'https://ig.me/m/onegoldenboyy';
 const OFFERS = [
   {id: 'beta', name: 'Masterclass + mentorstvo', price: '150 €', old: '', when: 'Samo za prvih 10 kupaca', tag: 'PRVIH 10',
-   inc: ['Golden Masterclass, kompletna trading strategija', 'Mentorstvo 3 puta nedeljno po 1 sat', 'Samo 10 mesta']},
+   inc: ['Golden Masterclass, kompletna trading strategija', 'Mesec dana mentorstva, 3 puta nedeljno po 1 sat', 'Samo 10 mesta']},
   {id: 'main', name: 'Masterclass', price: '250 €', old: '300 €', when: 'Cena važi do 30.12.', tag: 'DO 30.12.',
    inc: ['Golden Masterclass, kompletna trading strategija', '1 sat mentorstva', 'Cena 250 € umesto 300 €, samo do 30.12.']}
 ];
