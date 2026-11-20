@@ -155,3 +155,22 @@ body.embed-open #view{max-width:none;padding:0;gap:0;height:100dvh;display:flex;
 .del{width:40px;height:40px;flex:none;border:0;background:transparent;color:var(--faint);display:grid;place-items:center;cursor:pointer;border-radius:10px;margin-right:-8px}
 .del svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8}
 .del:hover{color:var(--bad)}
+
+/* alati: padajući meni u Trading zaglavlju */
+.top-act{display:flex;align-items:center;gap:8px}
+.tools-btn{padding:0;color:var(--goldText)}
+.tools-btn svg{stroke-width:1.6}
+.tools-btn.on{background:var(--gold);color:#111111}
+.tools-bg{position:fixed;inset:0;z-index:20;background:rgba(0,0,0,.6)}
+.tools-panel{position:fixed;z-index:21;top:calc(66px + env(safe-area-inset-top));right:max(20px,calc((100vw - 560px)/2 + 20px));width:min(360px,calc(100vw - 40px));max-height:calc(100dvh - 160px);overflow-y:auto;border:1px solid var(--gold);border-radius:18px;background:var(--card);padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.tools-x{width:32px;height:32px;border:0;background:none;color:var(--muted);display:grid;place-items:center;cursor:pointer;border-radius:50%}
+.tools-x svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8}
+.tool{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+.tool .t{display:flex;flex-direction:column;gap:2px}
+.tool .t b{font-weight:500;font-size:14px;display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.tool .t small{font-size:11px;color:var(--muted)}
+.ptag{font-size:10px;letter-spacing:.06em;font-weight:500;color:var(--goldText);border:1px solid var(--gold);border-radius:8px;padding:1px 6px}
+.tl{display:flex;gap:6px;flex:none}
+.tl a{min-width:40px;height:36px;padding:0 10px;border:1px solid var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;gap:5px;color:var(--goldText);text-decoration:none;font-size:12px;font-weight:600}
+.tl a svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8}
+.tools-note{font-size:11px;margin:8px 0 0}

@@ -127,11 +127,55 @@ const campaign = () => {
 };
 
 /* ---------- delovi UI ---------- */
-const top = (title) => `<header class="top">
+const top = (title, extra = '') => `<header class="top">
   <a class="brand" href="#pocetna"><img src="crown.png" alt="The Golden Circle kruna">${title ? '' : 'THE GOLDEN CIRCLE'}</a>
   ${title ? `<span class="eyebrow">${title}</span>` : ''}
-  <a class="round" href="#meni" aria-label="Otvori meni"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></a>
+  <div class="top-act">${extra}<a class="round" href="#meni" aria-label="Otvori meni"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></a></div>
 </header>`;
+
+/* ---------- alati (padajući meni u Trading zaglavlju) ----------
+   Linkovi su preuzeti doslovno iz Discord kanala basic-links. */
+const TOOLS = [
+  {name: 'MetaTrader 5', desc: 'Otvaranje i zatvaranje pozicija', links: [
+    ['iOS', 'https://apps.apple.com/rs/app/metatrader-5/id413251709?l=hr'],
+    ['Android', 'https://play.google.com/store/apps/details?id=net.metaquotes.metatrader5']]},
+  {name: 'QuoMarkets', desc: 'Broker: nalog, depozit, povezivanje sa MT5', partner: true, links: [
+    ['Otvori', 'https://my.quomarkets.com/register?regnew=019612ad-1323-7325-9a08-b7f60e744be4']]},
+  {name: 'TradingView', desc: 'Tehnička analiza, linije i zone', partner: true, links: [
+    ['Otvori', 'https://www.tradingview.com/pricing/?share_your_love=daca22']]},
+  {name: 'Forex Factory', desc: 'Kalendar vesti: NFP, CPI, FOMC', links: [
+    ['Otvori', 'https://www.forexfactory.com/calendar']]},
+  {name: 'Binance', desc: 'Kripto, povlačenje kapitala', partner: true, links: [
+    ['Otvori', 'https://web3.binance.com/m/referral?ref=E291JAIO']]}
+];
+const EXT = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>';
+let toolsOpen = false;
+const toolsBtn = () => `<button type="button" class="round gold tools-btn${toolsOpen ? ' on' : ''}" data-tools aria-expanded="${toolsOpen}" aria-controls="tools" aria-label="${toolsOpen ? 'Zatvori alate' : 'Otvori alate'}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></svg></button>`;
+const toolsPanel = () => `<div class="tools-bg" data-tools-close></div>
+  <section class="tools-panel" role="dialog" aria-modal="true" aria-label="Alati">
+    <div class="row"><span class="eyebrow gold">ALATI</span><button type="button" class="tools-x" data-tools-close aria-label="Zatvori alate"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+    ${TOOLS.map(t => `<div class="tool">
+      <span class="t"><b>${esc(t.name)}${t.partner ? '<span class="ptag">partner</span>' : ''}</b><small>${esc(t.desc)}</small></span>
+      <span class="tl">${t.links.map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener" aria-label="${esc(t.name)}${t.links.length > 1 ? ' ' + esc(l) : ''}">${t.links.length > 1 ? esc(l) : ''}${EXT}</a>`).join('')}</span>
+    </div>`).join('')}
+    <p class="muted tools-note">Partner: preporuka preko partnerskog linka.</p>
+  </section>`;
+const setTools = (open, focusBtn) => {
+  toolsOpen = open;
+  let box = document.getElementById('tools');
+  if (!box) { box = document.createElement('div'); box.id = 'tools'; document.body.appendChild(box); }
+  box.innerHTML = open ? toolsPanel() : '';
+  document.body.classList.toggle('tools-open', open);
+  const b = view.querySelector('[data-tools]');
+  if (b) { b.outerHTML = toolsBtn(); }
+  if (open) box.querySelector('.tools-panel a')?.focus();
+  else if (focusBtn) view.querySelector('[data-tools]')?.focus();
+};
+document.addEventListener('click', e => {
+  if (e.target.closest('[data-tools]')) setTools(!toolsOpen, false);
+  else if (e.target.closest('[data-tools-close]')) setTools(false, true);
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && toolsOpen) setTools(false, true); });
 
 const taskList = (d) => {
   const firstTodo = d.tasks.findIndex(t => t.status === 'todo');
@@ -255,7 +299,7 @@ const screens = {
     const s = sessions(), j = journal();
     const bal = gc.calc.balance ?? (j && j.balance > 0 ? Math.round(j.balance * 100) / 100 : '');
     const risk = gc.calc.risk ?? 1, sl = gc.calc.sl ?? 200;
-    return `${top('XAU / USD')}
+    return `${top('XAU / USD', toolsBtn())}
     <h1>Trading</h1>
     ${s.noTrade ? `<p class="warn">${s.noTrade}</p>` : ''}
     <div class="sessions">${s.list.map(x => `<div class="sess ${x.on ? 'on' : ''}"><span>${x.name}</span><b>${x.range}</b><small>${x.state}</small></div>`).join('')}</div>
@@ -468,6 +512,7 @@ const route = () => {
   current = ['meni', 'masterclass', 'mindset'].includes(h) || h in EMBEDS || TABS.includes(h) ? h : 'pocetna';
   if (!gc.name) { if (current !== 'pocetna') wanted = current; current = 'prijava'; }
   if (TABS.includes(current)) lastTab = current;
+  if (toolsOpen) setTools(false);
   render();
   window.scrollTo(0, 0);
 };
@@ -550,7 +595,7 @@ view.addEventListener('input', e => {
 });
 
 /* osvežavanje: tajmeri sesija i promene iz drugih alata */
-const idle = () => !view.contains(document.activeElement) || document.activeElement === view;
+const idle = () => !toolsOpen && (!view.contains(document.activeElement) || document.activeElement === view);
 setInterval(() => { if ((current === 'pocetna' || current === 'trading') && idle()) render(true); }, 30000);
 document.addEventListener('visibilitychange', () => { if (!document.hidden && idle()) render(true); });
 window.addEventListener('storage', e => { if (e.key && (e.key.startsWith('process:') || e.key === 'gtj:v2') && idle()) render(true); });
