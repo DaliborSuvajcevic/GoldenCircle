@@ -14,6 +14,7 @@ const LINKS = {
   snake: 'https://daliborsuvajcevic.github.io/snake/',
   card: 'https://daliborsuvajcevic.github.io/digital-card/',
   instagram: 'https://www.instagram.com/onegoldenboyy/',
+  discord: 'https://discord.gg/uK7sNY3RsX',
   starter: 'https://goldenboyy.gumroad.com/l/xvexk',
   masterclass: 'https://goldenboyy.gumroad.com/l/nwidl',
   clarity: 'https://goldenboyy.gumroad.com/l/wfoepq'
@@ -350,6 +351,7 @@ const screens = {
     </section>
     <section class="list" aria-label="Ekosistem">
       <a class="item" href="#snake"><span class="t"><b class="serif" style="font-size:17px">Snake</b><small>Igraj</small></span>${CHEV}</a>
+      <a class="item" href="${LINKS.discord}" target="_blank" rel="noopener"><span class="t"><b class="serif" style="font-size:17px">Discord</b><small>Zajednica The Golden Circle</small></span>${CHEV}</a>
     </section>
     <div class="tiles">
       <a class="tile" href="${LINKS.instagram}"><span>Instagram</span><b style="font:500 14px Inter">@onegoldenboyy</b></a>
