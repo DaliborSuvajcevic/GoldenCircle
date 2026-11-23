@@ -16,4 +16,4 @@ Povezivanje sa Process i Journal radi jer su svi alati na istoj adresi (dalibors
 ## Fajlovi
 - `index.html`, `styles.css`, `app.js`: aplikacija
 - `legal.html`: uslovi korišćenja i politika privatnosti (nacrt, čeka pravnu proveru)
-- `crown.png`: originalni logo
+- `crown.png`: kruna iz zvaničnog logoa The Golden Circle (linijska kruna, od 23. 11. 2026)
