@@ -1,23 +1,29 @@
 {
   "date": "2026-11-24",
   "time": "07:30",
-  "headline": "Zlato se odbija od 14-mesečnog dna, evro na najnižem nivou u 2026.",
-  "summary": "Tržište je smanjilo opklade na agresivno podizanje kamata Fed-a u decembru, pa je zlato posle pada od 9% prošle nedelje krenulo naviše. Dolar ostaje jak, a EUR/USD je u ponedeljak probio novi godišnji minimum. Glavni događaj nedelje je PCE inflacija u sredu u 14:30.",
+  "headline": "Zlato se vraća ka 3.665 dolara posle 14-mesečnog dna, evro ostaje blizu najnižeg nivoa u 2026.",
+  "summary": "Zlato je od petkovog dna nadoknadilo više od 3% jer je tržište smanjilo opklade na podizanje kamata Fed-a za 50 baznih poena u decembru. Dolar ostaje jak, a EUR/USD je u ponedeljak pao na novi godišnji minimum 1,0887. Glavni događaj nedelje je PCE inflacija u sredu u 14:30.",
   "instruments": [
     {
       "symbol": "XAU/USD",
       "items": [
         {
-          "title": "Zlato oko 3.635 dolara posle odbijanja od dna",
-          "text": "U ranoj azijskoj sesiji u utorak zlato se trguje oko 3.635 dolara, nakon što se odbilo od najnižeg nivoa u više od godinu dana. Trejderi kupuju pad, a tržište je izbacilo iz cene scenario podizanja kamata Fed-a za 50 baznih poena na decembarskom sastanku. Fokus je na PCE inflaciji u sredu.",
-          "source": "FXStreet",
-          "url": "https://www.fxstreet.com/news/gold-rebounds-above-3-600-as-ceo-nvidia-returns-markets-trim-fed-hike-202611232326"
+          "title": "Zlato do 3.665 dolara, oporavak veći od 3%",
+          "text": "U utorak ujutru zlato je došlo do oko 3.665,70 dolara i nadoknadilo više od 3% posle prošlonedeljnog pada od oko 9%. Kupce je privukao rast akcija i slabiji preliminarni PMI SAD (kompozitni 54,6, najniži u četiri meseca). Prvi otpor je zona 3.685 do 3.700 dolara, a podrška 3.572 do 3.591.",
+          "source": "Mitrade",
+          "url": "https://www.mitrade.com/insights/commodity-analysis/gold/gold-rebounds-nvidia-pmi-natixis-warns"
         },
         {
           "title": "Najgora nedelja od marta, pa skok od 2,5%",
           "text": "Prošle nedelje zlato je izgubilo oko 9% i u petak dotaklo minimum blizu 3.502 dolara, najslabiji nivo od septembra 2025. U ponedeljak se vratilo za oko 2,5%, do 3.634 dolara, jer su kupci ušli posle rasprodaje.",
           "source": "USAGOLD",
           "url": "https://www.usagold.com/daily-gold-price-history/"
+        },
+        {
+          "title": "Natixis: oporavak može biti kratak",
+          "text": "Analitičar Natixisa Bernard Dahdah procenjuje da bi zlato do januara moglo da padne na 3.340 dolara. Kao razloge navodi oštar Fed i sporije kupovine centralnih banaka; Poljska je dostigla cilj od 700 tona, a Kazahstan planira da smanji udeo zlata u rezervama sa 78% na 75%.",
+          "source": "Mitrade",
+          "url": "https://www.mitrade.com/insights/commodity-analysis/gold/gold-rebounds-nvidia-pmi-natixis-warns"
         },
         {
           "title": "Nivoi: 3.700 otpor, 3.500 podrška",
@@ -58,16 +64,55 @@
     }
   ],
   "calendar": [
-    {"time": "10:00", "cur": "EUR", "event": "Nemačka, Ifo poslovna klima (nov)", "impact": "srednji", "note": ""},
-    {"time": "14:15", "cur": "USD", "event": "ADP zaposlenost, nedeljni prosek", "impact": "nizak", "note": ""},
-    {"time": "16:00", "cur": "USD", "event": "Poverenje potrošača, Conference Board (nov)", "impact": "srednji", "note": "Prognoza 92,1 · prethodno 91,7"},
-    {"time": "16:00", "cur": "USD", "event": "Richmond Fed, proizvodnja (nov)", "impact": "nizak", "note": "Prognoza 2 · prethodno -2"},
-    {"time": "Tokom dana", "cur": "EUR", "event": "Govore ECB Vujčić i Kocher", "impact": "srednji", "note": ""}
+    {
+      "time": "10:00",
+      "cur": "EUR",
+      "event": "Nemačka, Ifo poslovna klima (nov)",
+      "impact": "srednji",
+      "note": ""
+    },
+    {
+      "time": "14:15",
+      "cur": "USD",
+      "event": "ADP zaposlenost, nedeljni prosek",
+      "impact": "nizak",
+      "note": ""
+    },
+    {
+      "time": "16:00",
+      "cur": "USD",
+      "event": "Poverenje potrošača, Conference Board (nov)",
+      "impact": "srednji",
+      "note": "Prognoza 92,1 · prethodno 91,7"
+    },
+    {
+      "time": "16:00",
+      "cur": "USD",
+      "event": "Richmond Fed, proizvodnja (nov)",
+      "impact": "nizak",
+      "note": "Prognoza 2 · prethodno -2"
+    },
+    {
+      "time": "Tokom dana",
+      "cur": "EUR",
+      "event": "Govore ECB Vujčić i Kocher",
+      "impact": "srednji",
+      "note": ""
+    }
   ],
   "ahead": "Sreda 14:30: PCE inflacija za oktobar (bazni PCE, prognoza 0,3% m/m) i druga procena BDP-a SAD za Q3 (prognoza 3,5%). Četvrtak: Dan zahvalnosti, berze u SAD zatvorene.",
-  "calendarSource": {"name": "FXStreet ekonomski kalendar", "url": "https://www.fxstreet.com/economic-calendar"},
+  "calendarSource": {
+    "name": "FXStreet ekonomski kalendar",
+    "url": "https://www.fxstreet.com/economic-calendar"
+  },
   "sources": [
-    {"name": "FXStreet", "url": "https://www.fxstreet.com"},
-    {"name": "Forex Factory", "url": "https://www.forexfactory.com/calendar"}
+    {
+      "name": "FXStreet",
+      "url": "https://www.fxstreet.com"
+    },
+    {
+      "name": "Forex Factory",
+      "url": "https://www.forexfactory.com/calendar"
+    }
   ]
 }
