@@ -229,10 +229,10 @@ const safeUrl = u => /^https:\/\//.test(String(u)) ? esc(u) : '#';
 const newsCard = () => {
   if (!news) return '';
   const fresh = news.date === today();
-  return `<a class="card offer-card" href="#vesti" aria-label="Vesti dana, XAU/USD i EUR/USD">
-      <div class="row"><span class="eyebrow">VESTI DANA · XAU/USD · EUR/USD</span><span class="muted" style="font-size:12px">${fresh ? esc(news.time) : esc(newsDate(news))}</span></div>
-      <p class="serif" style="margin:0;font-size:19px;line-height:1.3">${esc(news.headline)}</p>
-      <span class="row"><span class="link">${fresh ? 'Pročitaj jutarnji pregled' : 'Poslednje izdanje'}</span>${CHEV}</span>
+  return `<a class="card offer-card slim" href="#vesti" aria-label="Vesti dana, XAU/USD i EUR/USD">
+      <span style="min-width:0"><span class="eyebrow">VESTI · ${fresh ? 'DANAS ' + esc(news.time) : esc(newsDate(news)).toUpperCase()}</span>
+      <span class="clamp2" style="margin-top:6px">${esc(news.headline)}</span></span>
+      ${CHEV}
     </a>`;
 };
 
@@ -246,40 +246,38 @@ const screens = {
     const s = sessions(), j = journal(), c = campaign();
     const sessLine = s.noTrade ? `<span class="pill muted">${s.noTrade}</span>` : s.active ? `<span class="pill gold"><i class="dot"></i>${s.active.name} sesija aktivna</span>` : s.next ? `<span class="pill muted">${s.next.name} za ${dur(s.next.from - belgrade().min)}</span>` : '<span class="pill muted">Sesije završene</span>';
     const dateStr = new Date().toLocaleDateString('sr-Latn-RS', {weekday: 'long', day: 'numeric', month: 'long'});
+    const sessName = s.noTrade ? 'Vikend' : s.active ? s.active.name : s.next ? s.next.name : 'Kraj dana';
+    const sessSub = s.noTrade ? 'Bez trgovanja' : s.active ? 'Aktivna sada' : s.next ? `Za ${dur(s.next.from - belgrade().min)}` : 'Sesije završene';
     return `${top()}
     <div><div class="date">${dateStr}</div><h1>${hi}, ${esc(gc.name)}.</h1></div>
 
     ${stepCard()}
 
+    <div class="duo">
+      <a class="card mini offer-card" href="#disciplina" aria-label="Zadaci za danas">
+        <span class="eyebrow">ZADACI</span>
+        <b class="mini-val">${d.tasks.length ? `${doneN(d)} / ${d.tasks.length}` : '0'}</b>
+        <span class="muted" style="font-size:12px">${d.tasks.length ? `${p}% završeno` : 'Dodaj zadatke'}</span>
+      </a>
+      <a class="card mini offer-card" href="#trading" aria-label="Trading sesija">
+        <span class="eyebrow">SESIJA</span>
+        <b class="mini-val${s.active ? ' gold' : ''}">${sessName}</b>
+        <span class="muted" style="font-size:12px">${sessSub}</span>
+      </a>
+    </div>
+
     ${newsCard()}
 
-    <section class="card inv" aria-label="Standard dana">
-      <div class="row"><span class="eyebrow">STANDARD DANA</span><b>${d.tasks.length ? `${doneN(d)} / ${d.tasks.length}` : 'Bez zadataka'}</b></div>
-      <p class="quote">${STANDARDS[dayOfYear() % STANDARDS.length]}</p>
-      <div class="track" role="progressbar" aria-valuenow="${p}" aria-valuemin="0" aria-valuemax="100" aria-label="Završeno danas"><i style="width:${p}%"></i></div>
-      <a class="link" href="#disciplina">${d.tasks.length ? 'Otvori zadatke' : 'Dodaj zadatke za danas'}</a>
-    </section>
-
-    <a class="card offer-card" href="#mindset" aria-label="Mindset, misao dana">
-      <div class="row"><span class="eyebrow">MINDSET · MISAO DANA</span></div>
+    <a class="card inv offer-card" href="#mindset" aria-label="Misao dana, otvori Mindset">
+      <span class="eyebrow">MISAO DANA</span>
       <p class="quote">${THOUGHTS[dayOfYear() % THOUGHTS.length]}</p>
-      <span class="row"><span class="link">Otvori Mindset</span>${CHEV}</span>
     </a>
 
-    ${c ? (() => { return `<a class="card hi offer-card" href="#masterclass" aria-label="Golden Masterclass, pogledaj ponudu">
-      <div class="row"><span class="eyebrow">MASTERCLASS KAMPANJA</span><span style="font-size:13px">${c.over ? 'Poslednji dani' : `Dan ${c.day} / ${CAMPAIGN.days}`}</span></div>
-      <div class="row" style="align-items:flex-end"><span><span class="serif" style="font-size:22px;display:block">Golden Masterclass</span><span class="muted" style="font-size:13px">Prvih 10: 150 € · zatim 250 € do 30.12.</span></span>
-        <span class="big gold" style="font-size:28px;white-space:nowrap">od 150 €</span></div>
-      <div class="track"><i style="width:${c.day / CAMPAIGN.days * 100}%"></i></div>
-      <span class="row"><span class="link">Pogledaj šta dobijaš</span>${CHEV}</span>
-    </a>`; })() : ''}
-
-    <div class="tiles">
-      <a class="tile" href="#disciplina"><b>Disciplina</b><span>Zadaci, pregled dana, niz</span></a>
-      <a class="tile" href="#trading"><b>Trading</b><span>Rizik, sesije, dnevnik</span></a>
-      <a class="tile" href="#biznis"><b>Biznis</b><span>Proizvodi i ponude</span></a>
-      <a class="tile" href="#krug"><b>Krug</b><span>Brend, igra, kontakt</span></a>
-    </div>`;
+    ${c ? `<a class="card hi offer-card slim" href="#masterclass" aria-label="Golden Masterclass, pogledaj ponudu">
+      <span><span class="eyebrow">MASTERCLASS · ${c.over ? 'POSLEDNJI DANI' : `DAN ${c.day} / ${CAMPAIGN.days}`}</span>
+      <span class="serif" style="font-size:19px;display:block;margin-top:4px">Golden Masterclass <span class="gold">od 150 €</span></span></span>
+      ${CHEV}
+    </a>` : ''}`;
   },
 
   disciplina() {
