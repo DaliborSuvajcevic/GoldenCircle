@@ -218,6 +218,24 @@ const embed = (label, url, back, title) => `<div class="embed-top"><a class="rou
   <iframe class="embed" src="${url}" title="${title}" loading="eager"></iframe>`;
 const EMBEDS = Object.assign(Object.create(null), {dnevnik: 'trading', process: 'disciplina', kartica: 'krug', snake: 'krug'});
 
+
+/* ---------- vesti dana (vesti.json, osvežava se radnim danima u 07:30) ---------- */
+let news = null;
+const loadNews = () => fetch('vesti.json?t=' + Date.now(), {cache: 'no-store'}).then(r => r.ok ? r.json() : null)
+  .then(j => { news = j && Array.isArray(j.instruments) ? j : false; if (['pocetna', 'vesti'].includes(current) && idle()) render(true); })
+  .catch(() => { news = false; });
+const newsDate = n => new Date(n.date + 'T12:00').toLocaleDateString('sr-Latn-RS', {weekday: 'long', day: 'numeric', month: 'long'});
+const safeUrl = u => /^https:\/\//.test(String(u)) ? esc(u) : '#';
+const newsCard = () => {
+  if (!news) return '';
+  const fresh = news.date === today();
+  return `<a class="card offer-card" href="#vesti" aria-label="Vesti dana, XAU/USD i EUR/USD">
+      <div class="row"><span class="eyebrow">VESTI DANA · XAU/USD · EUR/USD</span><span class="muted" style="font-size:12px">${fresh ? esc(news.time) : esc(newsDate(news))}</span></div>
+      <p class="serif" style="margin:0;font-size:19px;line-height:1.3">${esc(news.headline)}</p>
+      <span class="row"><span class="link">${fresh ? 'Pročitaj jutarnji pregled' : 'Poslednje izdanje'}</span>${CHEV}</span>
+    </a>`;
+};
+
 /* ---------- ekrani ---------- */
 const screens = {
   pocetna() {
@@ -232,6 +250,8 @@ const screens = {
     <div><div class="date">${dateStr}</div><h1>${hi}, ${esc(gc.name)}.</h1></div>
 
     ${stepCard()}
+
+    ${newsCard()}
 
     <section class="card inv" aria-label="Standard dana">
       <div class="row"><span class="eyebrow">STANDARD DANA</span><b>${d.tasks.length ? `${doneN(d)} / ${d.tasks.length}` : 'Bez zadataka'}</b></div>
@@ -388,6 +408,42 @@ const screens = {
   kartica() { return embed('KONTAKT', LINKS.card, 'krug', 'Digitalna kartica'); },
   snake() { return embed('SNAKE', LINKS.snake, 'krug', 'Snake'); },
 
+  vesti() {
+    const back = `<header class="top"><a class="round" href="#pocetna" aria-label="Nazad"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a>
+      <span class="eyebrow">VESTI DANA</span><img src="crown.png" alt="The Golden Circle kruna"></header>`;
+    if (news === null) return `${back}<p class="muted">Učitavam vesti…</p>`;
+    if (!news) return `${back}<div><h1>Vesti dana</h1><p class="sub">Vesti trenutno nisu dostupne. Proveri internet vezu i pokušaj ponovo.</p></div>`;
+    const fresh = news.date === today();
+    const imp = i => i === 'visok' ? 'gold' : 'muted';
+    return `${back}
+    <div><div class="date">${esc(newsDate(news))} · ${esc(news.time)}</div><h1>Vesti dana</h1><p class="sub">XAU/USD i EUR/USD, jutarnji pregled.</p></div>
+    ${fresh ? '' : `<p class="pill muted" style="margin:0">Novo izdanje stiže radnim danima u 07:30.</p>`}
+    <section class="card inv" aria-label="Ukratko">
+      <span class="eyebrow">UKRATKO</span>
+      <p class="serif" style="margin:0;font-size:20px;line-height:1.3">${esc(news.headline)}</p>
+      <p style="margin:0">${esc(news.summary)}</p>
+    </section>
+    ${news.instruments.map(ins => `<section class="list" aria-label="${esc(ins.symbol)}">
+      <span class="eyebrow">${esc(ins.symbol)}</span>
+      ${(ins.items || []).map(it => `<article class="card" style="gap:8px">
+        <b class="serif" style="font-size:19px;font-weight:500;line-height:1.3">${esc(it.title)}</b>
+        <p style="margin:0" class="muted">${esc(it.text)}</p>
+        <a class="link" href="${safeUrl(it.url)}" target="_blank" rel="noopener">Izvor: ${esc(it.source)} ↗</a>
+      </article>`).join('')}
+    </section>`).join('')}
+    ${news.calendar && news.calendar.length ? `<section class="card" aria-label="Kalendar za danas">
+      <span class="eyebrow">KALENDAR ZA DANAS · BEOGRADSKO VREME</span>
+      ${news.calendar.map(e => `<div style="display:flex;gap:12px;border-top:1px solid var(--line);padding-top:10px">
+        <b style="min-width:58px;font-variant-numeric:tabular-nums">${esc(e.time)}</b>
+        <span style="display:flex;flex-direction:column;gap:2px;flex:1"><span>${esc(e.event)}</span>
+        <span class="muted" style="font-size:12px">${esc(e.cur)} · uticaj: <span class="${imp(e.impact)}">${esc(e.impact)}</span>${e.note ? ' · ' + esc(e.note) : ''}</span></span>
+      </div>`).join('')}
+      ${news.ahead ? `<p class="muted" style="margin:0;font-size:13px;border-top:1px solid var(--line);padding-top:10px">${esc(news.ahead)}</p>` : ''}
+      ${news.calendarSource ? `<a class="link" href="${safeUrl(news.calendarSource.url)}" target="_blank" rel="noopener">${esc(news.calendarSource.name)} ↗</a>` : ''}
+    </section>` : ''}
+    <p class="muted" style="font-size:12px;margin:0">Vesti su sažeci na srpskom prema navedenim izvorima, sa linkom na original. Edukativni sadržaj, nije finansijski savet. Trgovanje nosi rizik gubitka uloženog kapitala.</p>`;
+  },
+
   mindset() {
     const principles = [['01', 'Doslednost', 'Nije važno šta radiš jednom. Važno je šta radiš svakog dana.'], ['02', 'Fokus', 'Ljudi ne propadaju zbog manjka prilika. Propadaju zbog manjka fokusa.'], ['03', 'Strpljenje', 'Veliki rezultati zahtevaju vreme. Kao i stablo, raste tiho, korak po korak.']];
     const owner = [['Gubitak na tržištu', 'Analiziram svoj plan.'], ['Loš rezultat u poslu', 'Menjam strategiju, ne izgovore.'], ['Težak period', 'Tražim rešenje, ne krivca.']];
@@ -504,14 +560,14 @@ const render = (keepScroll) => {
   document.body.classList.toggle('menu-open', current === 'meni' || current === 'prijava');
   document.body.classList.toggle('embed-open', current in EMBEDS);
   document.documentElement.classList.toggle('nobar', (current === 'meni' || current === 'prijava' || current in EMBEDS));
-  const act = EMBEDS[current] || (current === 'masterclass' ? 'biznis' : current === 'mindset' ? 'pocetna' : current);
+  const act = EMBEDS[current] || (current === 'masterclass' ? 'biznis' : ['mindset', 'vesti'].includes(current) ? 'pocetna' : current);
   document.querySelectorAll('.tabbar a').forEach(a => a.dataset.tab === act ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
   if (current === 'trading') updateCalc();
   if (keepScroll) window.scrollTo(0, y);
 };
 const route = () => {
   const h = location.hash.slice(1);
-  current = ['meni', 'masterclass', 'mindset'].includes(h) || h in EMBEDS || TABS.includes(h) ? h : 'pocetna';
+  current = ['meni', 'masterclass', 'mindset', 'vesti'].includes(h) || h in EMBEDS || TABS.includes(h) ? h : 'pocetna';
   if (!gc.name) { if (current !== 'pocetna') wanted = current; current = 'prijava'; }
   if (TABS.includes(current)) lastTab = current;
   if (toolsOpen) setTools(false);
@@ -599,10 +655,11 @@ view.addEventListener('input', e => {
 /* osvežavanje: tajmeri sesija i promene iz drugih alata */
 const idle = () => !toolsOpen && (!view.contains(document.activeElement) || document.activeElement === view);
 setInterval(() => { if ((current === 'pocetna' || current === 'trading') && idle()) render(true); }, 30000);
-document.addEventListener('visibilitychange', () => { if (!document.hidden && idle()) render(true); });
+document.addEventListener('visibilitychange', () => { if (!document.hidden) { loadNews(); if (idle()) render(true); } });
 window.addEventListener('storage', e => { if (e.key && (e.key.startsWith('process:') || e.key === 'gtj:v2') && idle()) render(true); });
 window.addEventListener('hashchange', route);
 
 applyTheme();
 route();
+loadNews();
 }
