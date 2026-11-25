@@ -1,35 +1,35 @@
 {
-  "date": "2026-11-24",
+  "date": "2026-11-25",
   "time": "07:30",
-  "headline": "Zlato se vraća ka 3.665 dolara posle 14-mesečnog dna, evro ostaje blizu najnižeg nivoa u 2026.",
-  "summary": "Zlato je od petkovog dna nadoknadilo više od 3% jer je tržište smanjilo opklade na podizanje kamata Fed-a za 50 baznih poena u decembru. Dolar ostaje jak, a EUR/USD je u ponedeljak pao na novi godišnji minimum 1,0887. Glavni događaj nedelje je PCE inflacija u sredu u 14:30.",
+  "headline": "Zlato palo 2,25% na 3.552 dolara zbog rasprodaje tehnoloških akcija, evro se odbio na 1,0966 pred PCE inflaciju.",
+  "summary": "Zlato je u utorak izgubilo 81,70 dolara jer su pale akcije tehnoloških i AI kompanija, a tržište gotovo sigurno očekuje podizanje kamata Fed-a u decembru. EUR/USD je porastao 0,58% i udaljio se od godišnjeg minimuma. Danas u 14:30 stižu PCE inflacija, BDP SAD i zahtevi za pomoć nezaposlenima, sve dan pred Dan zahvalnosti.",
   "instruments": [
     {
       "symbol": "XAU/USD",
       "items": [
         {
-          "title": "Zlato do 3.665 dolara, oporavak veći od 3%",
-          "text": "U utorak ujutru zlato je došlo do oko 3.665,70 dolara i nadoknadilo više od 3% posle prošlonedeljnog pada od oko 9%. Kupce je privukao rast akcija i slabiji preliminarni PMI SAD (kompozitni 54,6, najniži u četiri meseca). Prvi otpor je zona 3.685 do 3.700 dolara, a podrška 3.572 do 3.591.",
+          "title": "Zlato izgubilo 2,25%, oporavak izbrisan",
+          "text": "Spot zlato je utorak završilo na 3.552,50 dolara, niže za 81,70 dolara (2,25%), posle dnevnog dna od 3.546 dolara. Jutros se trgovalo oko 3.540 dolara. Pad je pokrenula rasprodaja akcija tehnoloških i AI kompanija, a ne samo dolar.",
           "source": "Mitrade",
-          "url": "https://www.mitrade.com/insights/commodity-analysis/gold/gold-rebounds-nvidia-pmi-natixis-warns"
+          "url": "https://www.mitrade.com/insights/commodity-analysis/gold/gold-tumbles-bca-exits-before-pce"
         },
         {
-          "title": "Najgora nedelja od marta, pa skok od 2,5%",
-          "text": "Prošle nedelje zlato je izgubilo oko 9% i u petak dotaklo minimum blizu 3.502 dolara, najslabiji nivo od septembra 2025. U ponedeljak se vratilo za oko 2,5%, do 3.634 dolara, jer su kupci ušli posle rasprodaje.",
-          "source": "USAGOLD",
-          "url": "https://www.usagold.com/daily-gold-price-history/"
-        },
-        {
-          "title": "Natixis: oporavak može biti kratak",
-          "text": "Analitičar Natixisa Bernard Dahdah procenjuje da bi zlato do januara moglo da padne na 3.340 dolara. Kao razloge navodi oštar Fed i sporije kupovine centralnih banaka; Poljska je dostigla cilj od 700 tona, a Kazahstan planira da smanji udeo zlata u rezervama sa 78% na 75%.",
+          "title": "BCA Research zatvorio četvorogodišnju kupovnu poziciju",
+          "text": "BCA Research je izašao iz duge pozicije u zlatu koju je držao četiri godine, nakon što je cena probila 3.700 dolara naniže. Tržište vidi oko 95% verovatnoće da Fed u decembru podigne kamatu za 25 baznih poena. Srebro je istog dana palo 5,22%, na 40,79 dolara.",
           "source": "Mitrade",
-          "url": "https://www.mitrade.com/insights/commodity-analysis/gold/gold-rebounds-nvidia-pmi-natixis-warns"
+          "url": "https://www.mitrade.com/insights/commodity-analysis/gold/gold-tumbles-bca-exits-before-pce"
         },
         {
-          "title": "Nivoi: 3.700 otpor, 3.500 podrška",
-          "text": "Zlato je i dalje ispod 20-dnevnog proseka, a 3.700 dolara je prvi otpor. Jak dolar i očekivanje oštrijeg Fed-a ograničavaju rast. Analitičari kao donju referencu navode 3.500 dolara, petkov minimum.",
-          "source": "TMGM / FXStreet",
-          "url": "https://www.tmgm.com/en-in/analysis/market-news/article/gold-jumps-over-2-as-half-point-fed-hike-bets-fade-us-pce-in-focus-202611231116"
+          "title": "Jak podatak o poverenju potrošača, Nasdaq pao 1,48%",
+          "text": "Poverenje potrošača u SAD za novembar iznelo je 103,3, daleko iznad očekivanih 92,5, što ne ide u prilog ublažavanju politike pred sastanak Fed-a 8. i 9. decembra. Nasdaq je pao 1,48%, a prinos na desetogodišnje obveznice zatvoren je na 4,931%. Indeks dolara je pritom oslabio 0,39%, na 103,91.",
+          "source": "The Rio Times",
+          "url": "https://www.riotimesonline.com/global-economy-briefing-november-25-2026/"
+        },
+        {
+          "title": "Nivoi: podrška 3.500, otpor 3.600 dolara",
+          "text": "Prva podrška je zona 3.500 do 3.520 dolara, a sledeća 3.440 do 3.460. Otpor je na 3.583 do 3.600, pa 3.679 do 3.694 dolara. Satni RSI oko 28 ukazuje na preprodatost.",
+          "source": "Mitrade",
+          "url": "https://www.mitrade.com/insights/commodity-analysis/gold/gold-tumbles-bca-exits-before-pce"
         }
       ]
     },
@@ -37,82 +37,116 @@
       "symbol": "EUR/USD",
       "items": [
         {
-          "title": "EUR/USD pao na 1,0887, novi minimum 2026.",
-          "text": "Par je u ponedeljak pao 0,74% do 1,0887 i probio minimum od 18. novembra (1,0953). Pritisak su napravili slab PMI Francuske (46,2) i indeks dolara na 104,30. Podizanje kamata ECB-a u decembru tržište vidi sa oko 91% verovatnoće.",
-          "source": "TradingNews",
-          "url": "https://www.tradingnews.com/news/eur-usd-breaks-to-2026-low-at-10884-as-france-pmi-sinks-to-462-11100-usd-target"
+          "title": "Evro porastao 0,58% na 1,0966",
+          "text": "EUR/USD je utorak zatvorio na 1,0966, više za 0,58%, posle godišnjeg minimuma od oko 1,0881 dan ranije. Podršku je dao nemački Ifo indeks, koji je u novembru porastao na 90,6, sedmi mesec zaredom.",
+          "source": "Vibiznews",
+          "url": "https://vibiznews.com/index.php/2026/11/25/rekomendasi-forex-eur-usd-25-november-2026-dipengaruhi-pergerakan-dolar-as-cermati-data-ekonomi-jerman-dan-as/"
         },
         {
-          "title": "Dolar ojačao posle vesti o Nvidiji",
-          "text": "Evro je došao na najniži nivo od aprila 2025. jer je dolar ojačao nakon što je Nvidia vratila Jensena Huanga na mesto izvršnog direktora i podigla akcije.",
-          "source": "TMGM / FXStreet",
-          "url": "https://www.tmgm.com/en-eu/analysis/market-news/article/euro-slides-to-lowest-level-since-april-2025-as-nvidia-led-stock-rally-lifts-sentiment-202611231606"
+          "title": "Tržište čeka podizanje kamata i Fed-a i ECB-a",
+          "text": "Verovatnoća da Fed podigne kamatu 9. decembra procenjuje se na više od 90%, a za ECB u decembru oko 91%. U četvrtak izlazi zapisnik sa sastanka ECB-a, a u petak S&P preispituje kreditni rejting Francuske.",
+          "source": "Vibiznews",
+          "url": "https://vibiznews.com/index.php/2026/11/25/rekomendasi-forex-eur-usd-25-november-2026-dipengaruhi-pergerakan-dolar-as-cermati-data-ekonomi-jerman-dan-as/"
         },
         {
-          "title": "PMI evrozone: industrija bolje, usluge slabije",
-          "text": "Preliminarni podaci za novembar pokazali su da je proizvodnja u evrozoni nadmašila očekivanja, ali da je sektor usluga neočekivano usporio, pa evro nije dobio podršku.",
-          "source": "FXStreet",
-          "url": "https://fxstreet.com/news/euro-trims-daily-gains-as-preliminary-eurozone-activity-figures-fail-to-impress-202611230929"
-        },
-        {
-          "title": "ECB 17. decembra",
-          "text": "Novčana tržišta daju više od 90% verovatnoće da ECB podigne kamatu u decembru. Pošto je to već u ceni, evro bi dobio samo ako ECB najavi dalja podizanja. Prognoza je da EUR/USD ove nedelje ostane ispod 1,1100.",
-          "source": "Pound Sterling Live",
-          "url": "https://www.poundsterlinglive.com/eurusd/23914-euro-to-dollar-week-ahead-forecast-france-pce-pressure"
+          "title": "Očekivani raspon 1,0899 do 1,1041",
+          "text": "Posle pada od preko 100 pipsa u ponedeljak i blagog oporavka u utorak, trend ostaje silazni. Za sredu je očekivani raspon 1,0899 do 1,1041, uz prosečnu dnevnu volatilnost od 71 pips. Podrška je 1,0925, a otpor 1,0986.",
+          "source": "FX.co",
+          "url": "https://www.fx.co/en/analysis/464646"
         }
       ]
     }
   ],
   "calendar": [
     {
-      "time": "10:00",
+      "time": "08:00",
       "cur": "EUR",
-      "event": "Nemačka, Ifo poslovna klima (nov)",
+      "event": "Nemačka, BDP Q3 (konačni, kv/kv)",
       "impact": "srednji",
-      "note": ""
+      "note": "Prognoza 0,2% · prethodno 0,2%"
     },
     {
-      "time": "14:15",
+      "time": "14:30",
       "cur": "USD",
-      "event": "ADP zaposlenost, nedeljni prosek",
-      "impact": "nizak",
-      "note": ""
+      "event": "PCE inflacija (okt, g/g)",
+      "impact": "visok",
+      "note": "Prognoza 3,8% · prethodno 3,6%"
+    },
+    {
+      "time": "14:30",
+      "cur": "USD",
+      "event": "Bazni PCE (okt, m/m i g/g)",
+      "impact": "visok",
+      "note": "Prognoza 0,3% i 3,2% · prethodno 0,3% i 3,1%"
+    },
+    {
+      "time": "14:30",
+      "cur": "USD",
+      "event": "BDP SAD Q3, druga procena (godišnje)",
+      "impact": "visok",
+      "note": "Prognoza 3,5% · prethodno 3,4%"
+    },
+    {
+      "time": "14:30",
+      "cur": "USD",
+      "event": "Zahtevi za pomoć nezaposlenima",
+      "impact": "srednji",
+      "note": "Prognoza 200 hiljada · prethodno 203 hiljade"
+    },
+    {
+      "time": "14:30",
+      "cur": "USD",
+      "event": "Porudžbine trajnih dobara (okt)",
+      "impact": "srednji",
+      "note": "Prognoza 0,5% · prethodno 1,9%"
+    },
+    {
+      "time": "14:30",
+      "cur": "USD",
+      "event": "Lični prihodi i potrošnja (okt)",
+      "impact": "srednji",
+      "note": "Prognoza 0,3% i 0,4% · prethodno 0,2% i 0,5%"
     },
     {
       "time": "16:00",
       "cur": "USD",
-      "event": "Poverenje potrošača, Conference Board (nov)",
-      "impact": "srednji",
-      "note": "Prognoza 92,1 · prethodno 91,7"
-    },
-    {
-      "time": "16:00",
-      "cur": "USD",
-      "event": "Richmond Fed, proizvodnja (nov)",
+      "event": "Prodaja novih kuća (okt)",
       "impact": "nizak",
-      "note": "Prognoza 2 · prethodno -2"
+      "note": "Prognoza 645 hiljada · prethodno 676 hiljada"
     },
     {
-      "time": "Tokom dana",
-      "cur": "EUR",
-      "event": "Govore ECB Vujčić i Kocher",
+      "time": "20:00",
+      "cur": "USD",
+      "event": "Fed, Bež knjiga (Beige Book)",
       "impact": "srednji",
       "note": ""
     }
   ],
-  "ahead": "Sreda 14:30: PCE inflacija za oktobar (bazni PCE, prognoza 0,3% m/m) i druga procena BDP-a SAD za Q3 (prognoza 3,5%). Četvrtak: Dan zahvalnosti, berze u SAD zatvorene.",
+  "ahead": "Četvrtak: Dan zahvalnosti, berze u SAD zatvorene, a ECB objavljuje zapisnik sa poslednjeg sastanka. Petak: skraćeno trgovanje u SAD i odluka S&P-a o rejtingu Francuske.",
   "calendarSource": {
-    "name": "FXStreet ekonomski kalendar",
-    "url": "https://www.fxstreet.com/economic-calendar"
+    "name": "ActionForex ekonomski kalendar",
+    "url": "https://actionforex.com/economic-calendar/661596-eco-data-11-25-26"
   },
   "sources": [
     {
-      "name": "FXStreet",
-      "url": "https://www.fxstreet.com"
+      "name": "Mitrade",
+      "url": "https://www.mitrade.com/insights/commodity-analysis/gold/gold-tumbles-bca-exits-before-pce"
     },
     {
-      "name": "Forex Factory",
-      "url": "https://www.forexfactory.com/calendar"
+      "name": "The Rio Times",
+      "url": "https://www.riotimesonline.com/global-economy-briefing-november-25-2026/"
+    },
+    {
+      "name": "Vibiznews",
+      "url": "https://vibiznews.com/index.php/2026/11/25/rekomendasi-forex-eur-usd-25-november-2026-dipengaruhi-pergerakan-dolar-as-cermati-data-ekonomi-jerman-dan-as/"
+    },
+    {
+      "name": "FX.co",
+      "url": "https://www.fx.co/en/analysis/464646"
+    },
+    {
+      "name": "ActionForex",
+      "url": "https://actionforex.com/economic-calendar/661596-eco-data-11-25-26"
     }
   ]
 }
